@@ -503,7 +503,7 @@
     <div class="two-col">
       <div>
         <div class="chart-box">
-          <div class="chart-title"><span class="dot"></span>Setor de Entrada + Mecanismo dos Gols Sofridos · <span style="font-size:10px;color:#888;">*Bola Parada é subconjunto da Bola Aérea</span></div>
+          <div class="chart-title"><span class="dot"></span>Setor de Origem + Local de Finalização dos Gols Sofridos</div>
           <div class="chart-wrap">
             <canvas id="chartSetor"></canvas>
           </div>
@@ -511,13 +511,13 @@
       </div>
       <div style="padding-top: 8px;">
         <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:16px;">
-          A <strong>bola aérea</strong> é a maior vilã da temporada. Dos 29 gols sofridos, ao menos <strong class="stat-inline">9</strong> nasceram de ações pelo alto — cruzamentos, cabeceios e levantamentos. Desses 9, <strong>5 saíram de bola parada</strong> (escanteios e faltas diretas), enquanto os outros 4 vieram de cruzamentos em jogo aberto. São categorias sobrepostas: bola parada é um subconjunto da bola aérea, não uma conta à parte.
+          A <strong>bola aérea</strong> é a maior vilã da temporada. Dos 29 gols sofridos, ao menos <strong class="stat-inline">9</strong> nasceram de ações pelo alto — cruzamentos, cabeceios e levantamentos em jogo aberto.
         </p>
         <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:16px;">
           Por <strong>setor de origem do ataque</strong>, o <strong>lado direito da defesa</strong> é o mais vazado: <strong class="stat-inline">13</strong> gols — praticamente metade de todos os gols. O lado esquerdo (zona de Piton) contabiliza 9. O centro registra 7. E mais: <strong>24 dos 29 gols foram finalizados dentro da área</strong>, revelando colapso na proteção da zona mais crítica do campo.
         </p>
         <p style="font-size:15px; line-height:1.7; color:#444;">
-          Os <strong>5 gols de fora da área</strong> revelam deficiência na pressão ao portador da bola — um problema de organização estrutural, não apenas marcação individual. As duas leituras — setor e mecanismo — se cruzam: um gol de cabeça após escanteio pelo lado direito entra nas duas contagens ao mesmo tempo.
+          Os <strong>5 gols de fora da área</strong> revelam deficiência na pressão ao portador da bola — um problema de organização estrutural, não apenas marcação individual.
         </p>
 
         <div style="margin-top:24px;">
@@ -548,25 +548,19 @@
             <div class="bar-track"><div class="bar-fill" style="width:21%"></div></div>
             <span class="bar-val">5</span>
           </div>
-          <p style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#888; letter-spacing:2px; text-transform:uppercase; margin-top:18px; margin-bottom:10px;">Por mecanismo (com sobreposição)</p>
+          <p style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#888; letter-spacing:2px; text-transform:uppercase; margin-top:18px; margin-bottom:10px;">Por mecanismo</p>
           <div class="bar-row">
             <span class="bar-label">Bola Aérea</span>
             <div class="bar-track"><div class="bar-fill" style="width:69%"></div></div>
             <span class="bar-val">9</span>
           </div>
-          <div class="bar-row" style="padding-left:12px;">
-            <span class="bar-label" style="font-size:9px; color:#888;">↳ Bola Parada</span>
-            <div class="bar-track"><div class="bar-fill" style="width:38%; background: #c0392b88;"></div></div>
-            <span class="bar-val" style="font-size:11px; color:#888;">5</span>
-          </div>
           <div class="bar-row">
             <span class="bar-label">Jogo Aberto</span>
             <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
-            <span class="bar-val">5*</span>
+            <span class="bar-val">5</span>
           </div>
         </div>
-        <p style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#aaa; margin-top:8px; letter-spacing:1px;">SETOR ORIGEM: Lado Direito + Esquerdo + Centro = 29 (leituras exclusivas) · LOCAL FINALIZAÇÃO: 24 dentro + 5 fora = 29</p>
-        <p style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#aaa; margin-top:4px; letter-spacing:1px;">* MECANISMO: NÃO SOMAR BOLA AÉREA + BOLA PARADA (bola parada é subconjunto)</p>
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#aaa; margin-top:8px; letter-spacing:1px;">SETOR ORIGEM: Lado Direito + Esquerdo + Centro = 29 · LOCAL FINALIZAÇÃO: 24 dentro + 5 fora = 29</p>
       </div>
     </div>
   </div>
@@ -593,16 +587,16 @@
           <div style="position:absolute;bottom:0;left:20%;right:20%;height:18%;border:1px solid rgba(255,255,255,0.25);border-bottom:none;"></div>
           <div style="position:absolute;top:50%;left:50%;width:20%;aspect-ratio:1;border:1px solid rgba(255,255,255,0.25);border-radius:50%;transform:translate(-50%,-50%);"></div>
 
-          <!-- CORREDOR DIREITO DA DEFESA — left=18% (lado esquerdo da tela = lado direito do defensor) -->
-          <div class="heatspot" style="left:18%;top:22%;width:76px;height:76px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,1),rgba(192,57,43,0.3));">
-            13
-            <div class="tooltip">Lado direito da defesa · setor mais vazado · 13 gols sofridos</div>
-          </div>
-
-          <!-- CORREDOR ESQUERDO DA DEFESA — left=82% (lado direito da tela = lado esquerdo do defensor = zona de Piton) -->
-          <div class="heatspot" style="left:82%;top:22%;width:68px;height:68px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.9),rgba(192,57,43,0.25));">
+          <!-- CORREDOR ESQUERDO DA DEFESA — left=18% (lado esquerdo da tela = lado esquerdo do defensor = zona de Piton) -->
+          <div class="heatspot" style="left:18%;top:22%;width:68px;height:68px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.9),rgba(192,57,43,0.25));">
             9
             <div class="tooltip">Lado esquerdo da defesa (Piton) · 9 gols sofridos</div>
+          </div>
+
+          <!-- CORREDOR DIREITO DA DEFESA — left=82% (lado direito da tela = lado direito do defensor) -->
+          <div class="heatspot" style="left:82%;top:22%;width:76px;height:76px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,1),rgba(192,57,43,0.3));">
+            13
+            <div class="tooltip">Lado direito da defesa · setor mais vazado · 13 gols sofridos</div>
           </div>
 
           <!-- CENTRO DA ÁREA -->
@@ -622,6 +616,8 @@
             24
             <div class="tooltip">Dentro da área · 24 dos 29 gols foram finalizados aqui</div>
           </div>
+          <!-- Legenda do balão 24 -->
+          <div style="position:absolute;left:50%;top:calc(6% + 78px);transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:8px;color:rgba(13,43,110,0.95);background:rgba(240,236,226,0.92);padding:2px 6px;border-radius:2px;white-space:nowrap;letter-spacing:1px;font-weight:600;">GOL DENTRO DA ÁREA</div>
 
           <!-- Nota de total -->
           <div style="position:absolute;bottom:-30px;right:0;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(200,168,75,0.7);letter-spacing:1px;">TOTAL: 29 GOLS</div>
@@ -644,17 +640,6 @@
 
       <div style="margin-top:60px;"></div>
 
-      <!-- Nota de mecanismo separada do mapa -->
-      <div style="max-width:480px; width:100%; margin-top:8px; background:rgba(255,255,255,0.04); border-left:3px solid var(--dourado); padding:14px 18px;">
-        <p style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--dourado); text-transform:uppercase; margin-bottom:8px;">⚠ Mecanismo dos gols — leitura separada</p>
-        <p style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--cinza-claro); line-height:1.7;">
-          O mapa acima classifica por <strong style="color:var(--branco);">setor geográfico</strong>. Para o mecanismo:<br>
-          · <strong style="color:var(--branco);">9 gols</strong> nasceram de bola aérea (cruzamento ou cabeceio)<br>
-          · Desses 9, <strong style="color:var(--branco);">5 saíram de bola parada</strong> (escanteio ou falta)<br>
-          · Os outros <strong style="color:var(--branco);">4</strong> vieram de cruzamentos em jogo aberto<br>
-          <span style="color:rgba(200,168,75,0.7);">Bola parada é subconjunto de bola aérea — não se somam.</span>
-        </p>
-      </div>
     </div>
   </div>
 </div>
@@ -728,7 +713,7 @@
     </div>
 
     <div class="analysis-block" style="margin-top: 40px;">
-      <p>"O dado mais alarmante está na combinação: 13 gols pelo lado direito e 12 por erros individuais. Esses dois fatores ajudam a explicar a instabilidade defensiva do Vasco. Sobre a bola aérea: dos 9 gols sofridos por ações pelo alto, 4 saíram de bola parada (escanteio/falta) e 5 de cruzamentos em jogo aberto. São leituras sobrepostas — não independentes. O modelo ofensivo de Renato tem um custo defensivo concreto e o corredor direito paga a maior conta."</p>
+      <p>"O dado mais alarmante está na combinação: 13 gols pelo lado direito e 12 por erros individuais. Esses dois fatores ajudam a explicar a instabilidade defensiva do Vasco. Sobre a bola aérea: dos 9 gols sofridos por ações pelo alto, todos vieram de cruzamentos e cabeceios em jogo aberto. O modelo ofensivo de Renato tem um custo defensivo concreto e o corredor direito paga a maior conta."</p>
       <span class="author">— Análise tática · Incrível Futebol</span>
     </div>
   </div>
@@ -955,7 +940,7 @@
     </div>
     <div class="vd-item">
       <div class="vd-icon">⚽</div>
-      <div class="vd-text"><strong>Bola parada ofensiva</strong>Thiago Mendes é uma arma nas infiltrações e chegada na área. Vários gols em escanteios e cruzamentos confirmam eficiência nas bolas paradas ofensivas.</div>
+      <div class="vd-text"><strong>Eficiência ofensiva em bola aérea</strong>Thiago Mendes é uma arma nas infiltrações e chegada na área. Vários gols em escanteios e cruzamentos confirmam eficiência nas jogadas pelo alto no ataque.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">📈</div>
@@ -971,7 +956,7 @@
     </div>
     <div class="vd-item">
       <div class="vd-icon">🔴</div>
-      <div class="vd-text"><strong>Vulnerabilidade na bola aérea</strong>: 9 gols sofridos em ações pelo alto — 5 de bola parada (escanteio/falta) e 4 de cruzamentos em jogo aberto. Bola parada é subconjunto da bola aérea: não se somam. E <strong>24 dos 29 gols foram finalizados dentro da área</strong> — colapso total na proteção da zona mais crítica.</div>
+      <div class="vd-text"><strong>Vulnerabilidade na bola aérea</strong>: 9 gols sofridos em ações pelo alto — cruzamentos e cabeceios em jogo aberto. E <strong>24 dos 29 gols foram finalizados dentro da área</strong> — colapso total na proteção da zona mais crítica.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🔴</div>
@@ -1134,7 +1119,7 @@
         <div class="chart-box">
           <div class="chart-title"><span class="dot" style="background:var(--vermelho)"></span>PADRÃO DEFENSIVO — BOLA AÉREA MATA</div>
           <p style="font-size:14px;line-height:1.65;color:#444;">
-            <strong>9 gols sofridos em bola aérea</strong> — desses, 5 saíram de bola parada (escanteios e faltas) e 4 de cruzamentos em jogo aberto. São categorias sobrepostas: bola parada é subconjunto da bola aérea, não uma conta à parte. O número total de gols aéreos é 9, não 14.<br><br>
+            <strong>9 gols sofridos em bola aérea</strong> — cruzamentos e cabeceios em jogo aberto que a defesa simplesmente não disputa com firmeza.<br><br>
             O padrão é recorrente: Cruzeiro (3 cabeceios), Remo (cabeceio no final), Botafogo (cabeceio cruzado), Bahia (escanteio livre). A defesa não cobre o segundo poste e perde o duelo aéreo mesmo quando tem tempo para se organizar.
           </p>
         </div>
@@ -1143,7 +1128,7 @@
           <div class="chart-title"><span class="dot" style="background:var(--laranja)"></span>PADRÃO — GOLS CEDIDOS NOS ACRÉSCIMOS</div>
           <p style="font-size:14px;line-height:1.65;color:#444;">
             <strong>3 jogos em sequência fora de casa</strong> (Cruzeiro, Coritiba e Remo) o Vasco estava vencendo e cedeu o empate. Em todos os casos: <strong>bola aérea no final do jogo</strong>, com o time já acomodado no resultado — o gol do Remo saiu antes dos acréscimos, mas igualmente com a marcação adormecida.<br><br>
-            Isso revela dois problemas combinados: gestão emocional do resultado e marcação zona frouxíssima em cobranças de bola parada no final das partidas.
+            Isso revela dois problemas combinados: gestão emocional do resultado e marcação zona frouxíssima em situações de bola aérea no final das partidas.
           </p>
         </div>
 
@@ -1233,10 +1218,10 @@ const laranja = '#e67e22';
 new Chart(document.getElementById('chartOrigem'), {
   type: 'doughnut',
   data: {
-    labels: ['Bola aérea (9)', 'Bola parada (5)', 'Fora da área (5)', 'Ligação direta (3)', 'Erro na saída (3)', 'Outros (4)'],
+    labels: ['Bola aérea (9)', 'Fora da área (5)', 'Ligação direta (3)', 'Erro na saída (3)', 'Outros (9)'],
     datasets: [{
-      data: [9, 5, 5, 3, 3, 4],
-      backgroundColor: [verm, '#e74c3c', laranja, dourado, '#2952b3', '#95a5a6'],
+      data: [9, 5, 3, 3, 9],
+      backgroundColor: [verm, laranja, dourado, '#2952b3', '#95a5a6'],
       borderWidth: 0,
       hoverOffset: 6
     }]
@@ -1337,23 +1322,22 @@ new Chart(document.getElementById('chartEvolucao'), {
   }
 });
 
-// 4. Setor de Origem — barras horizontais (setor) + mecanismo separado
-// NOTA: Bola Parada é subconjunto de Bola Aérea — NÃO somar as duas.
-// Setor (Esq/Dir/Centro/Fora) classifica de onde o ataque veio.
-// Mecanismo (Aérea/Parada) classifica como o gol saiu — com sobreposição.
+// 4. Setor de Origem — barras horizontais (setor) + local de finalização + mecanismo
+// Setor (Esq/Dir/Centro) classifica de onde o ataque veio.
+// Mecanismo (Aérea/Jogo Aberto) classifica como o gol saiu.
 new Chart(document.getElementById('chartSetor'), {
   type: 'bar',
   data: {
-    labels: ['Lado Direito (origem)', 'Lado Esquerdo (origem)', 'Centro (origem)', '─── Local finaliz. ───', 'Dentro da área', 'Fora da área', '─── Mecanismo ───', 'Bola Aérea (total)', '  ↳ Bola Parada*'],
+    labels: ['Lado Direito (origem)', 'Lado Esquerdo (origem)', 'Centro (origem)', '─── Local finaliz. ───', 'Dentro da área', 'Fora da área', '─── Mecanismo ───', 'Bola Aérea (total)'],
     datasets: [{
       label: 'Gols sofridos',
-      data: [13, 9, 7, null, 24, 5, null, 9, 5],
+      data: [13, 9, 7, null, 24, 5, null, 9],
       backgroundColor: [
         verm, verm, 'rgba(192,57,43,0.7)',
         'rgba(0,0,0,0)',
         'rgba(26,60,140,0.7)', 'rgba(200,168,75,0.8)',
         'rgba(0,0,0,0)',
-        'rgba(192,57,43,0.65)', 'rgba(192,57,43,0.35)'
+        'rgba(192,57,43,0.65)'
       ],
       borderRadius: 3,
       borderSkipped: false,
@@ -1368,7 +1352,6 @@ new Chart(document.getElementById('chartSetor'), {
       tooltip: {
         callbacks: {
           label: ctx => {
-            if (ctx.label.includes('Parada')) return `${ctx.parsed.x} gols (subconjunto da Bola Aérea — não somar)`;
             if (ctx.label.includes('Mecanismo')) return '';
             return `${ctx.parsed.x} gols`;
           }
