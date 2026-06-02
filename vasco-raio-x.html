@@ -356,10 +356,25 @@
   .tl-note            { font-size: 13px; line-height: 1.55; }
   .tl-badge           { font-size: 10px; }
 
+  /* ── Badge cores ── */
+  .tl-badge {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .tl-badge.falha  { background: var(--vermelho); color: #fff; }
+  .tl-badge.virada { background: var(--vermelho); color: #fff; }
+  .tl-badge.renato { background: var(--vermelho); color: #fff; }
+
   /* ── Player tribunal ── */
   .players-grid       { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .player-number      { font-size: 36px; }
-  .player-name        { font-size: 13px; }
+  .player-name        { font-size: 13px; color: #000; font-weight: 700; }
   .player-role        { font-size: 10px; }
 
   /* ── Bar charts ── */
@@ -587,16 +602,16 @@
           <div style="position:absolute;bottom:0;left:20%;right:20%;height:18%;border:1px solid rgba(255,255,255,0.25);border-bottom:none;"></div>
           <div style="position:absolute;top:50%;left:50%;width:20%;aspect-ratio:1;border:1px solid rgba(255,255,255,0.25);border-radius:50%;transform:translate(-50%,-50%);"></div>
 
-          <!-- CORREDOR ESQUERDO DA DEFESA — left=18% (lado esquerdo da tela = lado esquerdo do defensor = zona de Piton) -->
-          <div class="heatspot" style="left:18%;top:22%;width:68px;height:68px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.9),rgba(192,57,43,0.25));">
-            9
-            <div class="tooltip">Lado esquerdo da defesa (Piton) · 9 gols sofridos</div>
-          </div>
-
-          <!-- CORREDOR DIREITO DA DEFESA — left=82% (lado direito da tela = lado direito do defensor) -->
-          <div class="heatspot" style="left:82%;top:22%;width:76px;height:76px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,1),rgba(192,57,43,0.3));">
+          <!-- CORREDOR DIREITO DA DEFESA — left=18% (lado esquerdo da tela = lado direito do defensor) -->
+          <div class="heatspot" style="left:18%;top:22%;width:76px;height:76px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,1),rgba(192,57,43,0.3));">
             13
             <div class="tooltip">Lado direito da defesa · setor mais vazado · 13 gols sofridos</div>
+          </div>
+
+          <!-- CORREDOR ESQUERDO DA DEFESA — left=82% (lado direito da tela = lado esquerdo do defensor = zona de Piton) -->
+          <div class="heatspot" style="left:82%;top:22%;width:68px;height:68px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.9),rgba(192,57,43,0.25));">
+            9
+            <div class="tooltip">Lado esquerdo da defesa (Piton) · 9 gols sofridos</div>
           </div>
 
           <!-- CENTRO DA ÁREA -->
@@ -616,8 +631,6 @@
             24
             <div class="tooltip">Dentro da área · 24 dos 29 gols foram finalizados aqui</div>
           </div>
-          <!-- Legenda do balão 24 -->
-          <div style="position:absolute;left:50%;top:calc(6% + 78px);transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:8px;color:rgba(13,43,110,0.95);background:rgba(240,236,226,0.92);padding:2px 6px;border-radius:2px;white-space:nowrap;letter-spacing:1px;font-weight:600;">GOL DENTRO DA ÁREA</div>
 
           <!-- Nota de total -->
           <div style="position:absolute;bottom:-30px;right:0;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(200,168,75,0.7);letter-spacing:1px;">TOTAL: 29 GOLS</div>
@@ -1039,6 +1052,41 @@
         <span class="num" style="color:var(--laranja);">6,9%</span>
         <span class="lbl">Conversão remates</span>
       </div>
+    </div>
+
+    <!-- Leitura dos KPIs -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:48px;">
+
+      <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">17,7 finalizações/jogo</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">Volume alto. A média da Série A gira em torno de 13–14 chutes por jogo — o Vasco está <strong>cerca de 30% acima</strong>. Indica pressão ofensiva real e disposição para atacar, mas o número precisa ser lido junto com a conversão.</p>
+      </div>
+
+      <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">1,49 xG médio/jogo</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">Mediano-alto para o Brasileirão. Significa que, pelo valor das chances criadas, o Vasco deveria marcar em torno de <strong>1,5 gol por jogo</strong> — ou aproximadamente 27 gols em 18 rodadas. Marcou 22. A diferença de 5 gols é o custo da ineficiência na finalização.</p>
+      </div>
+
+      <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">2,24 grandes chances/jogo</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">Número expressivo. "Grande chance" é aquela com alta probabilidade de gol — acima de 0,3 xG por finalização. Criar 2,24 por jogo indica que o Vasco chega com qualidade. O problema: <strong>não converte</strong> o que cria.</p>
+      </div>
+
+      <div style="background:#fff;border-left:3px solid var(--dourado);padding:16px 18px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#8a6e1a;text-transform:uppercase;margin-bottom:6px;">52,4% posse média</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">Ligeiramente acima de 50% — o Vasco controla a bola na maioria dos jogos. O dado isolado parece positivo, mas o paradoxo da temporada é que <strong>quando tem mais posse, perde mais</strong>: 8 dos 18 jogos com posse acima de 55% renderam apenas 2 pontos.</p>
+      </div>
+
+      <div style="background:#fff;border-left:3px solid var(--laranja);padding:16px 18px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--laranja);text-transform:uppercase;margin-bottom:6px;">81,8% eficiência xG</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">O Vasco converteu 81,8% do que o modelo estatístico esperava que convertesse. <strong>Abaixo de 100% significa subaproveitamento</strong>. Times eficientes ficam acima de 100% — ou seja, superam o xG. O Vasco está 18 pontos abaixo, deixando na mesa quase 5 gols ao longo da temporada.</p>
+      </div>
+
+      <div style="background:#fff;border-left:3px solid var(--vermelho);padding:16px 18px;">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--vermelho);text-transform:uppercase;margin-bottom:6px;">6,9% conversão de remates</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">O número mais preocupante do bloco. A média da Série A fica entre <strong>10% e 11%</strong> — o Vasco converte menos de 7 em cada 100 chutes. É o reflexo direto do jogo contra o Atlético-MG (26 chutes, 0 gol), mas o padrão se repete: volume alto, aproveitamento baixo.</p>
+      </div>
+
     </div>
 
     <!-- Gráficos lado a lado -->
