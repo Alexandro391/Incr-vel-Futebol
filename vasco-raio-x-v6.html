@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Raio-X do Vasco no Brasileirão 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
     --preto: #0a0a0a;
-    --chumbo: #1a1a2e;
+    --chumbo: #12182b;
     --azul-vasco: #0d2b6e;
     --azul-medio: #1a3c8c;
     --azul-claro: #2952b3;
@@ -18,21 +18,22 @@
     --branco: #f0ece2;
     --cinza-claro: #c9c3b5;
     --cinza-medio: #7a7060;
-    --vermelho: #c0392b;
-    --verde: #27ae60;
-    --laranja: #e67e22;
-    --texto: #1a1a2e;
+    --vermelho: #b83228;
+    --verde: #1e8c50;
+    --laranja: #d4721a;
+    --texto: #1c1c2e;
+    --bg-page: #edeae0;
+    --rule: #d5d0c5;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--branco);
+    background: var(--bg-page);
     color: var(--texto);
     font-family: 'Source Serif 4', Georgia, serif;
-    line-height: 1.7;
+    line-height: 1.72;
     overflow-x: hidden;
   }
 
@@ -41,414 +42,861 @@
     background: var(--chumbo);
     position: relative;
     overflow: hidden;
-    padding: 0;
   }
 
   .header-stripe {
-    height: 6px;
+    height: 5px;
     background: linear-gradient(90deg, var(--azul-vasco) 50%, var(--branco) 50%);
   }
 
   .header-inner {
-    max-width: 1100px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 60px 24px 50px;
+    padding: 64px 32px 56px;
     position: relative;
     z-index: 2;
   }
 
   .header-kicker {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 3px;
+    letter-spacing: 3.5px;
     color: var(--dourado);
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
-
   .header-kicker::before {
     content: '';
     display: inline-block;
-    width: 32px;
+    width: 28px;
     height: 2px;
     background: var(--dourado);
+    flex-shrink: 0;
   }
 
   .header-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(52px, 9vw, 110px);
-    line-height: 0.88;
+    font-size: clamp(58px, 10vw, 120px);
+    line-height: 0.87;
     color: var(--branco);
     letter-spacing: 2px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
-
-  .header-title span {
-    color: var(--dourado);
-  }
+  .header-title span { color: var(--dourado); }
 
   .header-subtitle {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(17px, 2.5vw, 24px);
+    font-size: clamp(16px, 2.2vw, 22px);
     color: var(--cinza-claro);
-    margin-top: 18px;
+    margin-top: 20px;
     max-width: 680px;
-    line-height: 1.45;
+    line-height: 1.5;
   }
 
   .header-meta {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--cinza-medio);
-    margin-top: 32px;
-    letter-spacing: 1px;
+    font-size: 10px;
+    color: rgba(201,195,181,0.45);
+    margin-top: 36px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
   }
 
   .header-bg-number {
     position: absolute;
-    right: -20px;
-    bottom: -40px;
+    right: -10px;
+    bottom: -50px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 340px;
-    color: rgba(255,255,255,0.03);
+    font-size: clamp(180px, 28vw, 360px);
+    color: rgba(255,255,255,0.025);
     line-height: 1;
     pointer-events: none;
     z-index: 1;
+    user-select: none;
   }
 
-  /* ── PLACAR GERAL ── */
+  /* ── SCOREBOARD ── */
   .scoreboard {
     background: var(--azul-vasco);
-    padding: 40px 24px;
+    padding: 36px 32px;
   }
-
-  .scoreboard-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  .scoreboard-inner { max-width: 1140px; margin: 0 auto; }
 
   .scoreboard-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 3px;
-    color: var(--dourado);
+    color: rgba(200,168,75,0.7);
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     text-align: center;
   }
 
   .scoreboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    grid-template-columns: repeat(9, 1fr);
     gap: 2px;
   }
 
   .score-card {
-    background: rgba(255,255,255,0.06);
-    padding: 20px 16px;
+    background: rgba(255,255,255,0.055);
+    padding: 18px 12px;
     text-align: center;
     border-top: 3px solid transparent;
-    transition: background 0.2s;
+    transition: background 0.18s;
   }
-
-  .score-card:hover { background: rgba(255,255,255,0.1); }
-
+  .score-card:hover { background: rgba(255,255,255,0.09); }
   .score-card.good { border-top-color: var(--verde); }
   .score-card.bad  { border-top-color: var(--vermelho); }
   .score-card.neutral { border-top-color: var(--dourado); }
 
   .score-card .num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
+    font-size: clamp(32px, 4vw, 52px);
     color: var(--branco);
     line-height: 1;
     display: block;
   }
-
   .score-card .lbl {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: rgba(240,236,226,0.55);
+    font-size: 9px;
+    color: rgba(240,236,226,0.5);
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-top: 4px;
+    margin-top: 5px;
     display: block;
   }
 
-  /* ── BODY ── */
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+  /* ── CONTAINER / SECTION ── */
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 32px; }
 
-  /* ── SECTION ── */
   .section {
-    padding: 70px 0;
-    border-bottom: 1px solid #ddd8cc;
+    padding: 72px 0;
+    border-bottom: 1px solid var(--rule);
   }
 
   .section-kicker {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
+    font-size: 9px;
+    letter-spacing: 3.5px;
     color: var(--azul-claro);
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
   .section-kicker::before {
     content: '';
     display: inline-block;
-    width: 20px;
-    height: 2px;
+    width: 18px;
+    height: 1.5px;
     background: var(--azul-claro);
+    flex-shrink: 0;
   }
 
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(34px, 5vw, 58px);
+    font-size: clamp(36px, 5.5vw, 62px);
     color: var(--azul-vasco);
-    line-height: 1;
-    margin-bottom: 20px;
+    line-height: 0.95;
+    margin-bottom: 22px;
     letter-spacing: 1px;
   }
 
   .section-lead {
-    font-size: clamp(16px, 2vw, 19px);
-    color: #333;
+    font-size: clamp(15.5px, 1.8vw, 18px);
+    color: #2e2e42;
     max-width: 760px;
-    line-height: 1.75;
+    line-height: 1.78;
     margin-bottom: 40px;
   }
 
-  /* ── LAYOUT COLS ── */
+  /* ── BODY TEXT ── */
+  .body-text {
+    font-size: 15.5px;
+    color: #3a3a50;
+    line-height: 1.78;
+    max-width: 760px;
+    margin-bottom: 20px;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--dourado);
+    padding: 14px 24px;
+    margin: 32px 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.1vw, 20px);
+    color: var(--azul-vasco);
+    line-height: 1.55;
+    background: rgba(13,43,110,0.035);
+  }
+
+  /* ── STAT INLINE ── */
+  .stat-inline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    color: var(--azul-vasco);
+    background: rgba(13,43,110,0.07);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* ── CHARTS ── */
+  .chart-box {
+    background: #fff;
+    border: 1px solid #e2ddd4;
+    padding: 20px 20px 16px;
+  }
+  .chart-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--cinza-medio);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--azul-vasco);
+    flex-shrink: 0;
+  }
+  .chart-wrap { position: relative; height: 250px; }
+  .chart-wrap.tall { height: 300px; }
+
+  /* ── TWO COL ── */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 28px;
     align-items: start;
   }
 
-  /* Responsive */
+  /* ── RULE ── */
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 48px 0; }
 
-  /* Animações */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
+  /* ── TIMELINE ── */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid #d0cbbf;
+    background: #fff;
+    color: var(--cinza-medio);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--azul-vasco);
+    color: var(--branco);
+    border-color: var(--azul-vasco);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 12px 90px 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 18px;
+    row-gap: 3px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .tl-item:last-child { border-bottom: none; }
+
+  .tl-dot {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .tl-dot.win  { background: var(--verde); }
+  .tl-dot.draw { background: var(--dourado); }
+  .tl-dot.loss { background: var(--vermelho); }
+
+  .tl-date {
+    grid-column: 2;
+    grid-row: 1;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--cinza-medio);
+    text-transform: uppercase;
+    padding-top: 3px;
   }
 
-  .animate { animation: fadeUp 0.6s ease both; }
-  .delay-1 { animation-delay: 0.1s; }
-  .delay-2 { animation-delay: 0.2s; }
-  .delay-3 { animation-delay: 0.3s; }
-
-/* ══════════════════════════════════════════
-   RESPONSIVE SYSTEM — 3 breakpoints
-   Desktop  ≥ 1024px  (base)
-   Tablet   768–1023px
-   Mobile   < 768px
-══════════════════════════════════════════ */
-
-/* ---------- TABLET (768px – 1023px) ---------- */
-
-  /* ── HEATMAP BASE ── */
-  .heatmap-pitch        { position: relative; width: 100%; max-width: 480px; aspect-ratio: 7/10; 
-                          background: repeating-linear-gradient(0deg,#0e3320 0px,#0e3320 40px,#113d28 40px,#113d28 80px);
-                          border: 2px solid rgba(255,255,255,0.3); overflow: hidden; }
-  .heatspot             { position: absolute; border-radius: 50%; display: flex; align-items: center;
-                          justify-content: center; font-family: 'IBM Plex Mono', monospace;
-                          font-weight: 700; color: #fff; cursor: default; 
-                          transform: translate(-50%, -50%); z-index: 2; }
-  .heatspot .tooltip    { position: absolute; bottom: calc(100% + 8px); left: 50%;
-                          transform: translateX(-50%); background: rgba(0,0,0,0.88);
-                          color: #fff; font-size: 10px; font-family: 'IBM Plex Mono', monospace;
-                          padding: 5px 8px; border-radius: 3px; white-space: nowrap;
-                          pointer-events: none; opacity: 0; transition: opacity 0.15s;
-                          z-index: 10; }
-  .heatspot:hover .tooltip { opacity: 1; }
-  .player-dot           { position: absolute; width: 26px; height: 26px; border-radius: 50%;
-                          background: rgba(255,255,255,0.88); color: #0a2a14;
-                          font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
-                          display: flex; align-items: center; justify-content: center;
-                          transform: translate(-50%, -50%); z-index: 3; cursor: default;
-                          border: 1.5px solid rgba(255,255,255,0.6);
-                          box-shadow: 0 0 6px rgba(0,0,0,0.5); }
-  .player-dot:hover::after { content: attr(title); position: absolute; bottom: calc(100% + 6px);
-                          left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.88);
-                          color: #fff; font-size: 9px; padding: 4px 7px; border-radius: 3px;
-                          white-space: nowrap; z-index: 20; pointer-events: none; }
-
-@media (max-width: 1023px) {
-  .container { padding: 0 20px; }
-  .section    { padding: 56px 0; }
-
-  /* Header */
-  .header-bg-number { font-size: 220px; opacity: 0.06; }
-  .header-content h2 { font-size: clamp(14px, 2vw, 18px); }
-
-  /* Scoreboard */
-  .scoreboard-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .score-card .num  { font-size: 34px; }
-
-  /* Virtudes/Defeitos */
-  .v-d-grid { grid-template-columns: 1fr 1fr; }
-
-  /* Charts */
-  .chart-wrap      { height: 240px; }
-  .chart-wrap.tall { height: 290px; }
-
-  /* Timeline */
-  .tl-date  { font-size: 11px; }
-  .tl-match { font-size: 15px; }
-
-  /* Player cards */
-  .players-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-
-  /* Two-col grids inside new offensiva section */
-  .grid-2col { grid-template-columns: 1fr 1fr; gap: 20px; }
-
-  /* Bar label */
-  .bar-label { width: 90px; font-size: 10px; }
-}
-
-/* ---------- MOBILE (< 768px) ---------- */
-@media (max-width: 767px) {
-  :root { --section-pad: 40px; }
-  .container { padding: 0 16px; }
-  .section    { padding: 40px 0; border-bottom: 1px solid #ddd8cc; }
-
-  /* ── Header ── */
-  .header-bg-number { display: none; }
-  .header-content   { padding: 40px 0 32px; }
-
-  /* ── Scoreboard ── */
-  .scoreboard-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+  .tl-match {
+    grid-column: 3;
+    grid-row: 1;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--azul-vasco);
+    letter-spacing: 0.5px;
+    line-height: 1.1;
   }
-  .score-card         { padding: 14px 10px; }
-  .score-card .num    { font-size: 28px; }
-  .score-card .lbl    { font-size: 10px; }
 
-  /* ── Section titles ── */
-  .section-title      { font-size: clamp(28px, 8vw, 42px); }
-  .section-lead       { font-size: 15px; }
-  .section-kicker     { font-size: 10px; }
+  .result {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 4px;
+  }
+  .result.win  { color: var(--verde); }
+  .result.draw { color: var(--dourado); }
+  .result.loss { color: var(--vermelho); }
 
-  /* ── Two-col → one col ── */
-  .two-col            { grid-template-columns: 1fr; }
-  .v-d-grid           { grid-template-columns: 1fr; }
-  .grid-2col          { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .tl-note {
+    grid-column: 3;
+    grid-row: 2;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #444;
+    margin-top: 4px;
+  }
 
-  /* ── Charts ── */
-  .chart-box          { padding: 16px 14px; }
-  .chart-wrap         { height: 220px; }
-  .chart-wrap.tall    { height: 260px; }
-
-  /* ── Heatmap ── */
-  .heatmap-section    { margin: 0 -16px; padding: 40px 16px; }
-  .heatmap-pitch      { max-width: 340px; }
-  .heatspot           { font-size: 11px; width: 38px; height: 38px; }
-
-  /* ── Virtudes / Defeitos ── */
-  .vd-col             { padding: 24px 16px; }
-
-  /* ── Timeline ── */
-  .tl-date            { font-size: 10px; }
-  .tl-match           { font-size: 14px; }
-  .tl-note            { font-size: 13px; line-height: 1.55; }
-  .tl-badge           { font-size: 10px; }
-
-  /* ── Badge cores ── */
   .tl-badge {
+    grid-column: 3;
+    grid-row: 3;
     display: inline-block;
     margin-top: 6px;
     padding: 3px 8px;
-    border-radius: 2px;
     font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    width: fit-content;
   }
   .tl-badge.falha  { background: var(--vermelho); color: #fff; }
-  .tl-badge.virada { background: var(--vermelho); color: #fff; }
-  .tl-badge.renato { background: var(--vermelho); color: #fff; }
+  .tl-badge.virada { background: var(--verde); color: #fff; }
+  .tl-badge.renato { background: var(--azul-vasco); color: var(--dourado); }
 
-  /* ── Player tribunal ── */
-  .players-grid       { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .player-number      { font-size: 36px; }
-  .player-name        { font-size: 13px; color: #000; font-weight: 700; }
-  .player-role        { font-size: 10px; }
+  /* ── PLAYER CARDS ── */
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
 
-  /* ── Bar charts ── */
-  .bar-label          { width: 80px; font-size: 9px; }
-  .bar-track          { flex: 1; }
-  .bar-val            { font-size: 11px; min-width: 20px; }
+  .player-card {
+    background: #fff;
+    border: 1px solid #e2ddd4;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .player-card.danger { border-top: 3px solid var(--vermelho); }
+  .player-card.watch  { border-top: 3px solid var(--laranja); }
+  .player-card.hero   { border-top: 3px solid var(--dourado); }
 
-  /* ── Analysis blocks ── */
-  .analysis-block     { padding: 18px 16px; font-size: 14px; }
-  .pull-quote         { padding: 10px 16px; font-size: clamp(15px, 4vw, 18px); }
+  .player-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--azul-vasco);
+    opacity: 0.18;
+  }
+  .player-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    color: var(--azul-vasco);
+    margin-top: -6px;
+  }
+  .player-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cinza-medio);
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
 
-  /* ── KPI grid (lab ofensivo) ── */
-  .kpi-grid           { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; }
-  .kpi-grid .score-card { padding: 12px 8px; }
-  .kpi-grid .num      { font-size: 22px; }
-  .kpi-grid .lbl      { font-size: 9px; }
+  /* ── VIRTUDES / DEFEITOS ── */
+  .v-d-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .vd-col {
+    padding: 36px 32px;
+  }
+  .vd-col.virtudes {
+    background: var(--azul-vasco);
+    color: var(--branco);
+  }
+  .vd-col.defeitos {
+    background: #1c0a08;
+    color: var(--branco);
+  }
+  .vd-col-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: var(--dourado);
+  }
+  .vd-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+  .vd-icon {
+    font-size: 15px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    width: 22px;
+  }
+  .vd-text {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: rgba(240,236,226,0.82);
+  }
+  .vd-text strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--dourado);
+    display: block;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
 
-  /* ── Patterns grid ── */
-  .patterns-grid      { grid-template-columns: 1fr !important; }
+  /* ── ANALYSIS BLOCK ── */
+  .analysis-block {
+    background: rgba(13,43,110,0.04);
+    border-left: 3px solid var(--azul-vasco);
+    padding: 20px 24px;
+    font-size: 14.5px;
+    line-height: 1.72;
+    color: #333;
+  }
+  .author {
+    display: block;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cinza-medio);
+  }
 
-  /* ── Context / historical box ── */
-  .context-box        { padding: 20px 16px; }
-  .context-box h3     { font-size: 22px; }
-  .context-box p      { font-size: 14px; }
+  /* ── HEATMAP ── */
+  .heatmap-section {
+    background: var(--chumbo);
+    padding: 60px 32px;
+  }
+  .heatmap-pitch {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 7/10;
+    background: repeating-linear-gradient(0deg,#0e3320 0px,#0e3320 40px,#113d28 40px,#113d28 80px);
+    border: 2px solid rgba(255,255,255,0.25);
+    overflow: hidden;
+  }
+  .heatspot {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    color: #fff;
+    cursor: default;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  .heatspot .tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.92);
+    color: #fff;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 6px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 10;
+  }
+  .heatspot:hover .tooltip { opacity: 1; }
 
-  /* ── Footer ── */
-  .footer             { padding: 32px 16px; font-size: 12px; }
+  .player-dot {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    color: #0a2a14;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    cursor: default;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    box-shadow: 0 0 6px rgba(0,0,0,0.4);
+  }
+  .player-dot:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.92);
+    color: #fff;
+    font-size: 9px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    z-index: 20;
+    pointer-events: none;
+  }
 
-  /* ── Radar chart height ── */
-  .chart-wrap[style*="max-height"] { max-height: 280px !important; }
-}
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .kpi-card {
+    background: #fff;
+    border: 1px solid #e2ddd4;
+    padding: 20px 16px;
+    text-align: center;
+    border-top: 3px solid transparent;
+  }
+  .kpi-card.neutral { border-top-color: var(--azul-vasco); }
+  .kpi-card.warn    { border-top-color: var(--laranja); }
+  .kpi-card.bad     { border-top-color: var(--vermelho); }
 
-/* ---------- SMALL MOBILE (< 420px) ---------- */
-@media (max-width: 419px) {
-  .scoreboard-grid    { grid-template-columns: repeat(2, 1fr); }
-  .players-grid       { grid-template-columns: 1fr 1fr; }
-  .chart-wrap         { height: 190px; }
-  .chart-wrap.tall    { height: 230px; }
-  .kpi-grid           { grid-template-columns: repeat(2, 1fr) !important; }
-  .bar-label          { width: 68px; font-size: 9px; }
-  .section-title      { font-size: clamp(24px, 9vw, 36px); }
-}
+  /* ── INFO CARDS ── */
+  .info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .info-card {
+    background: #fff;
+    border: 1px solid #e2ddd4;
+    padding: 18px 20px;
+  }
+  .info-card-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .info-card p {
+    font-size: 13.5px;
+    line-height: 1.68;
+    color: #444;
+  }
 
+  /* ── PATTERNS GRID ── */
+  .patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  /* ── CONTEXT BOX ── */
+  .context-box {
+    background: #fff;
+    border: 1px solid #e2ddd4;
+    border-left: 4px solid var(--azul-vasco);
+    padding: 28px 32px;
+    margin-top: 40px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--chumbo);
+    padding: 40px 32px;
+    color: var(--cinza-medio);
+  }
+  .footer-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+  .footer .sources {
+    font-size: 9px;
+    color: rgba(122,112,96,0.65);
+    margin-top: 16px;
+  }
+
+  /* ── ANIM ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.55s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE — Tablet 768–1139px
+  ══════════════════════════════════════════ */
+  @media (max-width: 1139px) {
+    .container { padding: 0 24px; }
+    .scoreboard { padding: 32px 24px; }
+    .scoreboard-grid { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .score-card .num { font-size: 36px; }
+    .heatmap-section { padding: 48px 24px; }
+    .vd-col { padding: 28px 24px; }
+
+    .two-col { gap: 20px; }
+    .chart-wrap { height: 230px; }
+    .chart-wrap.tall { height: 280px; }
+
+    .header-inner { padding: 52px 24px 44px; }
+    .info-cards-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE — Mobile < 768px
+  ══════════════════════════════════════════ */
+  @media (max-width: 767px) {
+    .container { padding: 0 16px; }
+    .section { padding: 44px 0; }
+
+    .header-inner { padding: 40px 16px 36px; }
+    .header-bg-number { display: none; }
+    .header-subtitle { font-size: 15px; }
+
+    .scoreboard { padding: 24px 16px; }
+    .scoreboard-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .score-card { padding: 12px 8px; }
+    .score-card .num { font-size: 26px; }
+    .score-card .lbl { font-size: 8px; }
+
+    .section-title { font-size: clamp(30px, 9vw, 46px); }
+    .section-lead { font-size: 15px; }
+
+    .two-col { grid-template-columns: 1fr; gap: 16px; }
+    .v-d-grid { grid-template-columns: 1fr; }
+    .info-cards-grid { grid-template-columns: 1fr; }
+
+    .chart-box { padding: 16px 14px; }
+    .chart-wrap { height: 220px; }
+    .chart-wrap.tall { height: 260px; }
+
+    .heatmap-section { padding: 36px 16px; }
+    .heatmap-pitch { max-width: 320px; }
+    .heatspot { font-size: 12px; width: 50px !important; height: 50px !important; }
+
+    .vd-col { padding: 24px 16px; }
+
+    .tl-item {
+      grid-template-columns: 10px 80px 1fr;
+      column-gap: 12px;
+    }
+    .tl-match { font-size: 16px; }
+    .tl-note { font-size: 13px; }
+    .tl-date { font-size: 8px; }
+
+    .players-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+    .kpi-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px; }
+    .kpi-grid .score-card .num { font-size: 22px; }
+    .kpi-grid .score-card .lbl { font-size: 8px; }
+
+    .patterns-grid { grid-template-columns: 1fr; }
+
+    .context-box { padding: 20px 16px; }
+
+    .footer { padding: 28px 16px; }
+    .pull-quote { padding: 10px 16px; font-size: 15px; }
+
+    .analysis-block { padding: 16px 16px; }
+  }
+
+  @media (max-width: 440px) {
+    .scoreboard-grid { grid-template-columns: repeat(3, 1fr); }
+    .players-grid { grid-template-columns: repeat(2, 1fr); }
+    .chart-wrap { height: 190px; }
+    .chart-wrap.tall { height: 230px; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .tl-item { grid-template-columns: 10px 1fr; }
+    .tl-date { grid-column: 2; grid-row: 1; }
+    .tl-dot { grid-row: 1; }
+    .tl-match { grid-column: 2; grid-row: 2; }
+    .tl-note { grid-column: 2; grid-row: 3; }
+    .tl-badge { grid-column: 2; grid-row: 4; }
+  }
+
+  /* Grid util */
+  .grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 767px) {
+    .grid-2col { grid-template-columns: 1fr !important; gap: 14px !important; }
+  }
+
+  /* ── NAV FIXO ── */
+  #sumario-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(12, 24, 43, 0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--dourado);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  #sumario-nav.visible {
+    transform: translateY(0);
+  }
+  .nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    color: var(--dourado);
+    letter-spacing: 2px;
+    white-space: nowrap;
+    padding: 12px 16px 12px 0;
+    border-right: 1px solid rgba(200,168,75,0.3);
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+  .nav-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cinza-claro);
+    text-decoration: none;
+    padding: 14px 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-link:hover, .nav-link.ativo {
+    color: var(--dourado-claro);
+    border-bottom-color: var(--dourado);
+  }
+  /* barra de progresso de leitura */
+  #leitura-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--azul-claro), var(--dourado));
+    z-index: 10000;
+    transition: width 0.1s linear;
+  }
 </style>
 </head>
 <body>
 
-<!-- ── HEADER ── -->
+<!-- ── BARRA DE PROGRESSO ── -->
+<div id="leitura-progress"></div>
+
+<!-- ── NAV FIXO ── -->
+<nav id="sumario-nav" aria-label="Sumário da matéria">
+  <div class="nav-inner">
+    <span class="nav-brand">Raio-X · Vasco</span>
+    <a class="nav-link" href="#panorama">Panorama</a>
+    <a class="nav-link" href="#analise">Análise</a>
+    <a class="nav-link" href="#defesa">Gols Sofridos</a>
+    <a class="nav-link" href="#heatmap">Mapa de Calor</a>
+    <a class="nav-link" href="#tribunal">Tribunal</a>
+    <a class="nav-link" href="#cronologia">Cronologia</a>
+    <a class="nav-link" href="#ataque">Ataque</a>
+    <a class="nav-link" href="#tatico">Tático</a>
+    <a class="nav-link" href="#laboratorio">Laboratório</a>
+    <a class="nav-link" href="#padroes">Padrões</a>
+    <a class="nav-link" href="#conclusao">Diagnóstico</a>
+  </div>
+</nav>
+
+
 <div class="header">
   <div class="header-stripe"></div>
   <div class="header-inner animate">
     <div class="header-kicker">Especial · Brasileirão Série A 2026</div>
     <h1 class="header-title">Raio-<span>X</span><br>do Vasco</h1>
-    <p class="header-subtitle">O Vasco reagiu. Virou clássico no Maracanã, bateu o líder na estreia de Renato, fez a torcida acreditar de novo. Mas a parada chegou com três derrotas seguidas, oito gols sofridos, um marcado — e uma defesa que insiste em trair a fé de São Januário. 18 rodadas, 29 gols sofridos e um diagnóstico que não dá para adiar.</p>
-    <div class="header-meta">ATUALIZADO EM 31 DE MAIO DE 2026 · EDIÇÃO ESPECIAL · INCRÍVEL FUTEBOL</div>
+    <p class="header-subtitle">18 rodadas. 29 gols sofridos. 12 erros individuais identificados. Os dados de uma campanha que oscila entre reação e colapso — e o diagnóstico defensivo que o returno não pode ignorar.</p>
+    <div class="header-meta">Atualizado em 31 de maio de 2026 · Edição especial · Incrível Futebol</div>
   </div>
   <div class="header-bg-number">26</div>
 </div>
 
 <!-- ── PLACAR GERAL ── -->
-<div class="scoreboard">
+<div id="panorama" class="scoreboard">
   <div class="scoreboard-inner">
-    <div class="scoreboard-label">▶ Campeonato Brasileiro 2026 · Panorama Geral (até 18ª rodada) · 20 Pontos</div>
+    <div class="scoreboard-label">▸ Brasileirão Série A 2026 — Panorama geral até a 18ª rodada</div>
     <div class="scoreboard-grid">
       <div class="score-card neutral"><span class="num">20</span><span class="lbl">Pontos</span></div>
       <div class="score-card neutral"><span class="num">18</span><span class="lbl">Jogos</span></div>
@@ -458,233 +906,164 @@
       <div class="score-card neutral"><span class="num">37%</span><span class="lbl">Aproveito</span></div>
       <div class="score-card good"><span class="num">22</span><span class="lbl">Gols Pró</span></div>
       <div class="score-card bad"><span class="num">29</span><span class="lbl">Gols Contra</span></div>
-      <div class="score-card bad"><span class="num">-7</span><span class="lbl">Saldo</span></div>
+      <div class="score-card bad"><span class="num">−7</span><span class="lbl">Saldo</span></div>
     </div>
   </div>
 </div>
 
 <!-- ── INTRO ── -->
-<div class="container">
+<div id="analise" class="container">
   <div class="section">
     <div class="section-kicker">Análise da temporada</div>
-    <h2 class="section-title">O Time Que Não Para de Se Autossabotar</h2>
+    <h2 class="section-title">Uma Campanha de Dois Registros</h2>
     <p class="section-lead">
-      Começou no pior jeito possível. Lanterna do Brasileirão, três derrotas nas primeiras quatro rodadas, São Januário em silêncio constrangido e a imprensa já decretando a queda. Quem é vascaíno conhece essa sensação no estômago — aquela mistura de raiva e amor que só quem torce pra esse clube sabe o que é. Depois veio Renato Gaúcho, e com ele a esperança voltou a respirar. Mas o futebol não é novela — o vilão voltou.
+      O Vasco chegou à parada para a Copa do Mundo com 20 pontos em 18 rodadas — número que esconde mais do que revela. Entre o lanternazão das primeiras rodadas e as três derrotas consecutivas na reta final, o clube oscilou entre momentos de reação genuína e colapsos defensivos que se repetem com regularidade preocupante.
     </p>
-    <p style="font-size: 15.5px; color: #444; line-height: 1.75; max-width: 760px;">
-      A campanha do Vasco na Série A 2026 é uma história de duas almas dentro do mesmo uniforme. A mesma equipe que entrou no Maracanã perdendo de 2 a 0 para o Fluminense e saiu de lá com 3 a 2 — arrancando gritos de quem estava no estádio e em casa — é a mesma que levou 4 a 1 do Internacional e apanhou de 3 a 0 do Bragantino dentro de São Januário. Não existe coerência nessa equipe. Existe garra em alguns dias, colapso em outros — e uma defesa que parece decidida a correr mais risco do que o coração do torcedor aguenta.
+    <p class="body-text">
+      A campanha tem dois registros nítidos. O primeiro: o mesmo time que entrou no Maracanã perdendo de 2 a 0 para o Fluminense e virou para 3 a 2 — com três gols em doze minutos — também levou 4 a 1 do Internacional no Beira-Rio e perdeu de 3 a 0 para o Bragantino dentro de São Januário. Não há um padrão de desempenho estável. Há capacidade técnica e emocional demonstrada em partes do campeonato, e há uma fragilidade estrutural que retorna toda vez que o time perde o equilíbrio.
     </p>
 
     <div class="pull-quote">
-      "O Vasco não perde apenas para os adversários. Muitas vezes, perde para os próprios erros — e o pior é que a torcida já sabe onde vai doer antes de doer."
+      "O Vasco não perde apenas para os adversários. Em 12 dos 29 gols sofridos, o erro foi interno — executado por quem deveria proteger o resultado, no momento em que o jogo mais exigia."
     </div>
 
-    <p style="font-size: 15.5px; color: #444; line-height: 1.75; max-width: 760px;">
-      Levantamos jogo a jogo as <span class="stat-inline">29</span> bolas que entraram no gol de Léo Jardim nas 18 rodadas. Identificamos de onde vieram, quem estava lá quando a bola passou, quais padrões se repetem e quais erros custaram pontos que poderiam ter mudado a cara da classificação. O resultado é um mapa de uma defesa que tem qualidade, mas que insiste em se trair nas horas que mais importam.
+    <p class="body-text">
+      Este levantamento percorreu os <span class="stat-inline">18</span> jogos da fase, registrando as <span class="stat-inline">29</span> bolas que entraram no gol de Léo Jardim. Identificamos origem, setor, mecanismo e responsabilidade de cada gol sofrido. O padrão que emerge não é aleatório: há zonas de vulnerabilidade que se repetem, erros individuais que se acumulam e um corredor específico — o direito — que concentra sozinho <span class="stat-inline">13</span> dos <span class="stat-inline">29</span> gols cedidos.
     </p>
   </div>
 </div>
 
 <!-- ── GOLS SOFRIDOS ── -->
-<div class="container">
+<div id="defesa" class="container">
   <div class="section">
     <div class="section-kicker">Estatísticas defensivas</div>
-    <h2 class="section-title">Os 29 Gols que Machucaram</h2>
+    <h2 class="section-title">Os 29 Gols Sofridos</h2>
     <p class="section-lead">
-      Vinte e nove vezes a bola entrou no gol de Léo Jardim. Vinte e nove momentos em que o silêncio caiu em São Januário — ou o adversário explodiu no Beira-Rio, no Maracanã, na Vila Belmiro. Não é um número abstrato. É dor acumulada, ponto perdido, noite mal dormida. E o que machuca mais: pelo menos <strong>12 desses gols nasceram de erros que não precisavam ter acontecido.</strong>
+      Vinte e nove gols sofridos em dezoito rodadas resultam em média de <strong>1,61 por jogo</strong> — índice que coloca o Vasco entre os piores defensivamente na faixa de clubes que disputam o meio da tabela. Pelo menos <strong>12 dessas ocorrências têm origem em erros diretos identificáveis</strong> — situações em que a falha individual precedeu o gol com clareza suficiente para ser catalogada.
     </p>
 
     <div class="two-col">
       <div>
         <div class="chart-box">
           <div class="chart-title"><span class="dot"></span>Origem dos Gols Sofridos</div>
-          <div class="chart-wrap">
-            <canvas id="chartOrigem"></canvas>
-          </div>
+          <div class="chart-wrap"><canvas id="chartOrigem"></canvas></div>
         </div>
       </div>
       <div>
         <div class="chart-box">
-          <div class="chart-title"><span class="dot"></span>Tipo de Falha — Gols com Erro Direto (12)</div>
-          <div class="chart-wrap">
-            <canvas id="chartFalha"></canvas>
-          </div>
+          <div class="chart-title"><span class="dot"></span>Tipo de Falha — 12 Gols com Erro Direto</div>
+          <div class="chart-wrap"><canvas id="chartFalha"></canvas></div>
         </div>
       </div>
     </div>
 
-    <div style="margin-top: 40px;">
+    <div style="margin-top: 24px;">
       <div class="chart-box">
-        <div class="chart-title"><span class="dot"></span>Gols Sofridos por Rodada — Evolução da Temporada</div>
-        <div class="chart-wrap tall">
-          <canvas id="chartEvolucao"></canvas>
-        </div>
+        <div class="chart-title"><span class="dot"></span>Gols Sofridos e Marcados por Rodada</div>
+        <div class="chart-wrap tall"><canvas id="chartEvolucao"></canvas></div>
       </div>
     </div>
 
     <hr class="rule">
 
-    <h3 style="font-family:'Bebas Neue',sans-serif; font-size:30px; color:var(--azul-vasco); margin-bottom:20px; letter-spacing:1px;">Por Onde a Bola Entra</h3>
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--azul-vasco);margin-bottom:16px;letter-spacing:1px;">Por Onde a Bola Entra</h3>
 
     <div class="two-col">
       <div>
         <div class="chart-box">
-          <div class="chart-title"><span class="dot"></span>Setor de Origem + Local de Finalização dos Gols Sofridos</div>
-          <div class="chart-wrap">
-            <canvas id="chartSetor"></canvas>
-          </div>
+          <div class="chart-title"><span class="dot"></span>Setor de Origem + Local de Finalização</div>
+          <div class="chart-wrap"><canvas id="chartSetor"></canvas></div>
         </div>
       </div>
-      <div style="padding-top: 8px;">
-        <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:16px;">
-          Tem um lado do campo que virou porta de entrada do pesadelo vascaíno. O <strong>lado direito da defesa</strong> — o corredor por onde tantas jogadas começam, por onde os laterais sobem cheios de vontade e voltam tarde demais — foi por onde vieram <strong class="stat-inline">13</strong> dos 29 gols sofridos. Quase metade. É muita coisa para um único setor aguentar.
+      <div style="padding-top: 4px;">
+        <p class="body-text">
+          O corredor direito da defesa vascaína — zona de responsabilidade primária do lateral-direito e do meia de mesmo lado — originou <strong>13 dos 29 gols sofridos</strong>. A concentração em um único setor, quase metade do total, indica um padrão estrutural, não pontual.
         </p>
-        <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:16px;">
-          O lado esquerdo, zona de responsabilidade de Piton, acumula 9. O centro registra 7. E o dado que talvez mais assuste: <strong>24 dos 29 gols foram finalizados dentro da área</strong> — dentro do espaço que deveria ser sagrado, inviolável. O adversário chegou lá com frequência demais, e chegou com espaço demais.
+        <p class="body-text">
+          O lado esquerdo, sob responsabilidade de Piton e Cuiabano alternadamente, registra 9 gols. O centro, 7. O dado que consolida o diagnóstico: <strong>24 dos 29 gols foram finalizados de dentro da área</strong> — o que sugere que o adversário chegou à zona de maior perigo com espaço e tempo disponíveis com frequência excessiva.
         </p>
-        <p style="font-size:15px; line-height:1.7; color:#444;">
-          Os <strong>5 gols de fora da área</strong> contam outra história: a de um time que às vezes nem chega perto do portador da bola antes do chute. Não é falta de talento — é falta de organização. E organização se treina, se corrige, se cobra.
+        <p class="body-text">
+          Os 5 gols de fora da área revelam um problema adicional: em determinadas situações, o time não chegou ao portador da bola antes do chute. Problema de linhas de pressão e cobertura, não apenas de posicionamento individual.
         </p>
-
-        
-
-<!-- ── HEAT MAP ── -->
-<div style="background: var(--chumbo); padding: 60px 24px;">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:3px; color:var(--dourado); text-transform:uppercase; margin-bottom:8px;">Mapa de calor defensivo</div>
-    <div style="font-family:'Bebas Neue',sans-serif; font-size:42px; color:var(--branco); margin-bottom:6px; letter-spacing:1px;">Onde o Vasco Sangra</div>
-    <p style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--cinza-medio); letter-spacing:2px; text-transform:uppercase; margin-bottom:36px;">Zonas de vulnerabilidade · Gols sofridos por região · Passe o mouse para detalhes</p>
-
-    <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-      <p style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--cinza-medio); letter-spacing:2px; text-transform:uppercase;">DEFESA DO VASCO (perspectiva do adversário)</p>
-
-      <div style="width:100%; max-width:480px; background:#0e3320; border:2px solid rgba(255,255,255,0.2); padding:20px; position:relative;">
-        <!-- Campo SVG com heatspots -->
-        <div class="heatmap-pitch">
-
-          <!-- ── LINHAS DO CAMPO ── -->
-          <!-- Linha do meio campo -->
-          <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,0.25);"></div>
-          <!-- Linha central vertical -->
-          <div style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,0.25);"></div>
-          <!-- Grande área INFERIOR (defesa do Vasco) -->
-          <div style="position:absolute;bottom:0;left:20%;right:20%;height:20%;border:1px solid rgba(255,255,255,0.3);border-bottom:none;"></div>
-          <!-- Pequena área INFERIOR -->
-          <div style="position:absolute;bottom:0;left:33%;right:33%;height:10%;border:1px solid rgba(255,255,255,0.2);border-bottom:none;"></div>
-          <!-- Grande área SUPERIOR (defesa adversária) -->
-          <div style="position:absolute;top:0;left:20%;right:20%;height:20%;border:1px solid rgba(255,255,255,0.15);border-top:none;"></div>
-          <!-- Círculo central -->
-          <div style="position:absolute;top:50%;left:50%;width:20%;aspect-ratio:1;border:1px solid rgba(255,255,255,0.25);border-radius:50%;transform:translate(-50%,-50%);"></div>
-          <!-- Gol inferior (Vasco) -->
-          <div style="position:absolute;bottom:0;left:42%;right:42%;height:3%;border:2px solid rgba(255,255,255,0.5);border-bottom:none;"></div>
-
-          <!-- ══════════════════════════════════
-               BALÕES DE GOLS (todos 56×56, igual ao "5")
-          ══════════════════════════════════ -->
-
-          <!-- 13 — lado direito da defesa (esquerda da tela) -->
-          <div class="heatspot" style="left:18%;top:22%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,1),rgba(192,57,43,0.3));">
-            13
-            <div class="tooltip">Lado direito da defesa · setor mais vazado · 13 gols sofridos</div>
-          </div>
-
-          <!-- 9 — lado esquerdo da defesa (direita da tela, zona Piton) -->
-          <div class="heatspot" style="left:82%;top:22%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.9),rgba(192,57,43,0.25));">
-            9
-            <div class="tooltip">Lado esquerdo da defesa (Piton) · 9 gols sofridos</div>
-          </div>
-
-          <!-- 7 — centro da área -->
-          <div class="heatspot" style="left:50%;top:16%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.85),rgba(192,57,43,0.2));">
-            7
-            <div class="tooltip">Centro da área · ligações diretas e rebotes · 7 gols</div>
-          </div>
-
-          <!-- 5 — fora da área -->
-          <div class="heatspot" style="left:50%;top:30%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(200,168,75,0.90),rgba(200,168,75,0.25));">
-            5
-            <div class="tooltip">Fora da área · chutes de média e longa distância · 5 gols</div>
-          </div>
-
-          <!-- 24 — dentro da área (azul) -->
-          <div class="heatspot" style="left:50%;top:6%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(13,43,110,0.90),rgba(13,43,110,0.3));">
-            24
-            <div class="tooltip">Dentro da área · 24 dos 29 gols foram finalizados aqui</div>
-          </div>
-
-          <!-- ══════════════════════════════════
-               11 JOGADORES — formação 4-4-2
-               Perspectiva do adversário:
-               GK na parte INFERIOR, ataque na SUPERIOR
-
-               1  Léo Jardim (GK)
-               2  PH / Puma (LD)
-               3  Cuesta / Saldívia (ZD)
-               4  R. Renan (ZE)
-               5  Piton / Cuiabano (LE)
-               6  Barros (MC)
-               7  Thiago Mendes (MC)
-               8  Rojas (MD)
-               9  Adson (ME)
-               10 Spinelli (MEI)
-               11 Andrés Gómez (MEI / CA)
-          ══════════════════════════════════ -->
-
-          <!-- 1 — Léo Jardim (GK) -->
-          <div class="player-dot" style="left:50%;top:94%;" title="1 · Léo Jardim (GK)">1</div>
-
-          <!-- Linha defensiva -->
-          <div class="player-dot" style="left:82%;top:82%;" title="2 · PH / Puma (Lateral-direito)">2</div>
-          <div class="player-dot" style="left:64%;top:80%;" title="3 · Cuesta / Saldívia (Zagueiro)">3</div>
-          <div class="player-dot" style="left:36%;top:80%;" title="4 · Robert Renan (Zagueiro)">4</div>
-          <div class="player-dot" style="left:38%;top:60%;" title="5 · Barros (Volante)">5</div>
-
-          <!-- Meio-campo -->
-          <div class="player-dot" style="left:18%;top:82%;" title="6 · Piton / Puma (Lateral-esquerdo)">6</div>
-          <div class="player-dot" style="left:82%;top:62%;" title="7 · Adson (Meia)">7</div>
-          <div class="player-dot" style="left:62%;top:60%;" title="8 · Thiago Mendes (Volante)">8</div>
-          <div class="player-dot" style="left:62%;top:44%;" title="9 · Spinelli (Meia-atacante)">9</div>
-
-          <!-- Ataque -->
-          <div class="player-dot" style="left:38%;top:44%;" title="10 · Rojas (Meia-atacante)">10</div>
-          <div class="player-dot" style="left:18%;top:62%;" title="11 · Andrés Gómez (Meia-atacante)">11</div>
-
-          <!-- Nota de total -->
-          <div style="position:absolute;bottom:-30px;right:0;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(200,168,75,0.7);letter-spacing:1px;">TOTAL: 29 GOLS</div>
-          <div style="position:absolute;bottom:-66px;left:0;right:0;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div style="width:12px;height:12px;border-radius:50%;background:rgba(192,57,43,0.9);"></div>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:1px;">SETOR ENTRADA</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div style="width:12px;height:12px;border-radius:50%;background:rgba(13,43,110,0.9);"></div>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:1px;">DENTRO DA ÁREA</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div style="width:12px;height:12px;border-radius:50%;background:rgba(200,168,75,0.85);"></div>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:1px;">FORA DA ÁREA</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div style="width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.85);"></div>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:1px;">JOGADORES</span>
-            </div>
-          </div>
-        </div>
       </div>
-
-      <div style="margin-top:80px;"></div>
-
     </div>
   </div>
 </div>
 
-<!-- ── CULPADOS ── -->
-<div class="container">
+<!-- ── HEAT MAP ── -->
+<div id="heatmap" class="heatmap-section">
+  <div style="max-width:1140px; margin:0 auto;">
+    <div class="section-kicker" style="color:var(--dourado);">Mapa de calor defensivo</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,46px);color:var(--branco);margin-bottom:6px;letter-spacing:1px;">Onde o Vasco Sangra</div>
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cinza-medio);letter-spacing:2px;text-transform:uppercase;margin-bottom:36px;">Zonas de vulnerabilidade · Gols sofridos por região · Passe o mouse para detalhes</p>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:2px;text-transform:uppercase;">Defesa do Vasco — perspectiva do adversário</p>
+
+      <div style="width:100%;max-width:480px;background:#0e3320;border:2px solid rgba(255,255,255,0.18);padding:20px;position:relative;">
+        <div class="heatmap-pitch">
+          <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,0.2);"></div>
+          <div style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,0.2);"></div>
+          <div style="position:absolute;bottom:0;left:20%;right:20%;height:20%;border:1px solid rgba(255,255,255,0.25);border-bottom:none;"></div>
+          <div style="position:absolute;bottom:0;left:33%;right:33%;height:10%;border:1px solid rgba(255,255,255,0.18);border-bottom:none;"></div>
+          <div style="position:absolute;top:0;left:20%;right:20%;height:20%;border:1px solid rgba(255,255,255,0.1);border-top:none;"></div>
+          <div style="position:absolute;top:50%;left:50%;width:20%;aspect-ratio:1;border:1px solid rgba(255,255,255,0.2);border-radius:50%;transform:translate(-50%,-50%);"></div>
+          <div style="position:absolute;bottom:0;left:42%;right:42%;height:3%;border:2px solid rgba(255,255,255,0.45);border-bottom:none;"></div>
+
+          <div class="heatspot" style="left:18%;top:22%;width:56px;height:56px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(184,50,40,1),rgba(184,50,40,0.25));">
+            13
+            <div class="tooltip">Lado direito da defesa · setor mais vazado · 13 gols</div>
+          </div>
+          <div class="heatspot" style="left:82%;top:22%;width:56px;height:56px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(184,50,40,0.85),rgba(184,50,40,0.2));">
+            9
+            <div class="tooltip">Lado esquerdo (Piton/Cuiabano) · 9 gols</div>
+          </div>
+          <div class="heatspot" style="left:50%;top:16%;width:56px;height:56px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(184,50,40,0.8),rgba(184,50,40,0.15));">
+            7
+            <div class="tooltip">Centro da área · rebotes e ligações diretas · 7 gols</div>
+          </div>
+          <div class="heatspot" style="left:50%;top:30%;width:56px;height:56px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(200,168,75,0.9),rgba(200,168,75,0.2));">
+            5
+            <div class="tooltip">Fora da área · chutes de média/longa distância · 5 gols</div>
+          </div>
+          <div class="heatspot" style="left:50%;top:6%;width:56px;height:56px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(13,43,110,0.92),rgba(13,43,110,0.25));">
+            24
+            <div class="tooltip">Dentro da área · 24 dos 29 gols finalizados aqui</div>
+          </div>
+
+          <div class="player-dot" style="left:50%;top:94%;" title="1 · Léo Jardim (GK)">1</div>
+          <div class="player-dot" style="left:82%;top:82%;" title="2 · PH / Puma (Lateral-direito)">2</div>
+          <div class="player-dot" style="left:64%;top:80%;" title="3 · Cuesta / Saldívia (Zagueiro)">3</div>
+          <div class="player-dot" style="left:36%;top:80%;" title="4 · Robert Renan (Zagueiro)">4</div>
+          <div class="player-dot" style="left:38%;top:60%;" title="5 · Barros (Volante)">5</div>
+          <div class="player-dot" style="left:18%;top:82%;" title="6 · Piton / Cuiabano (Lateral-esq.)">6</div>
+          <div class="player-dot" style="left:82%;top:62%;" title="7 · Adson (Meia)">7</div>
+          <div class="player-dot" style="left:62%;top:60%;" title="8 · Thiago Mendes (Volante)">8</div>
+          <div class="player-dot" style="left:62%;top:44%;" title="9 · Spinelli (Meia-atacante)">9</div>
+          <div class="player-dot" style="left:38%;top:44%;" title="10 · Rojas (Meia-atacante)">10</div>
+          <div class="player-dot" style="left:18%;top:62%;" title="11 · Andrés Gómez (Meia-atacante)">11</div>
+
+          <div style="position:absolute;bottom:-28px;right:0;font-family:'IBM Plex Mono',monospace;font-size:8px;color:rgba(200,168,75,0.6);letter-spacing:1px;">TOTAL: 29 GOLS</div>
+          <div style="position:absolute;bottom:-64px;left:0;right:0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:rgba(184,50,40,0.9);"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--cinza-medio);letter-spacing:1px;">ENTRADA</span></div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:rgba(13,43,110,0.9);"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--cinza-medio);letter-spacing:1px;">ÁREA</span></div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:rgba(200,168,75,0.85);"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--cinza-medio);letter-spacing:1px;">FORA DA ÁREA</span></div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.85);"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--cinza-medio);letter-spacing:1px;">JOGADORES</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:72px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TRIBUNAL DEFENSIVO ── -->
+<div id="tribunal" class="container">
   <div class="section">
     <div class="section-kicker">Responsabilidade individual</div>
     <h2 class="section-title">O Tribunal Defensivo</h2>
     <p class="section-lead">
-      Futebol não é só coletivo. Tem momentos em que uma decisão errada de um jogador muda o resultado de um jogo — e muda também o humor de uma cidade inteira. No Vasco de 2026, isso aconteceu com uma frequência que machuca. Pelo menos <strong>12 dos 29 gols sofridos</strong> têm um nome por trás: alguém que errou em hora errada, no lugar errado, do jeito errado. Os <strong>laterais concentram 6 desses erros</strong> — Piton com 3, PH com 2, Cuiabano com 1. Esses são os jogadores que precisam olhar o espelho antes do returno.
+      Futebol é um esporte coletivo, mas falhas individuais têm consequências mensuráveis. Dos <strong>29 gols sofridos</strong>, pelo menos <strong>12 têm um erro diretamente identificável</strong> como origem. Os laterais concentram 6 dessas ocorrências — Piton com 3, PH com 2, Cuiabano com 1. O número revela um padrão que vai além de má sorte pontual.
     </p>
 
     <div class="players-grid">
@@ -692,108 +1071,108 @@
         <span class="player-number">3</span>
         <span class="player-name">Piton</span>
         <span class="player-role">Lateral-esquerdo</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">Erro de saída no Mirassol, falha no corte contra a Chapecoense e corte errado no meio-campo contra o Bragantino — os três originaram gols. Lidera isolado o ranking de erros que resultaram em gol.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Erro de saída no Mirassol, falha no corte contra a Chapecoense e interceptação incorreta no meio-campo contra o Bragantino — os três originaram gols diretos. Lidera isolado o ranking de erros com resultado.</span>
       </div>
       <div class="player-card danger">
         <span class="player-number">1</span>
         <span class="player-name">Saldívia</span>
         <span class="player-role">Zagueiro</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">Recuo mal executado contra o Bragantino interceptado pelo adversário, resultando no 3º gol. Dificuldade de liderança na linha defensiva.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Recuo mal executado contra o Bragantino interceptado pelo adversário, resultando no 3º gol. Dificuldades de liderança e comunicação na linha defensiva.</span>
       </div>
       <div class="player-card watch">
         <span class="player-number">1</span>
         <span class="player-name">R. Renan</span>
         <span class="player-role">Zagueiro</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">"Tentou driblar perto da área, perdeu a bola gerando o gol do Grêmio.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Tentativa de condução próximo à área no clássico contra o Grêmio resultou em perda de bola e gol. Risco de jogo inconsistente com a função defensiva.</span>
       </div>
       <div class="player-card watch">
         <span class="player-number">1</span>
         <span class="player-name">Cuesta</span>
         <span class="player-role">Zagueiro</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">Gol contra na estreia. Dificuldades em organizar a linha defensiva em bolas aéreas.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Gol contra na estreia. Problemas recorrentes na organização da linha em bolas aéreas — especialmente nos momentos em que o time precisa recuar junto.</span>
       </div>
       <div class="player-card watch">
         <span class="player-number">2</span>
         <span class="player-name">PH</span>
         <span class="player-role">Lateral-direito</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">Cabeceio equivocado no Santos deixou a bola para Neymar. Pênalti desnecessário sobre Pedro no Fla. Lateral ofensivo que expõe as costas.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Cabeceio equivocado deixou a bola para Neymar (Santos). Pênalti desnecessário sobre Pedro no Fla-Vasco. Perfil ofensivo que expõe sistematicamente o corredor nas costas.</span>
       </div>
       <div class="player-card watch">
         <span class="player-number">1</span>
         <span class="player-name">Cuiabano</span>
         <span class="player-role">Lateral-esquerdo</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">Raspou de cabeça sem firmeza conta o São Paulo — a bola sobrou para Calleri, Léo Jardim defendeu, mas Luciano aproveitou o rebote. Falha de posicionamento que custou o gol do adversário.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Cabeceio sem firmeza no duelo contra o São Paulo — a bola sobrou para Calleri, Léo Jardim defendeu, mas Luciano aproveitou o rebote. Falha de posicionamento com custo direto.</span>
       </div>
       <div class="player-card watch">
         <span class="player-number">2</span>
         <span class="player-name">Léo Jardim</span>
         <span class="player-role">Goleiro</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">Falhou na falta da Chapecoense e na saída de bola que gerou o 2º gol do Inter. Às vezes defende o indefensável.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Falhou na cobrança de falta da Chapecoense e na saída que gerou o 2º gol do Inter. Defesas importantes ao longo da temporada, mas vulnerabilidades pontuais em momentos críticos.</span>
       </div>
       <div class="player-card hero">
         <span class="player-number">1</span>
         <span class="player-name">Hugo Moura</span>
         <span class="player-role">Volante</span>
-        <div style="height:1px;background:#eee;margin:10px 0;"></div>
-        <span style="font-size:12px;color:#888;line-height:1.5;">Recuo de cabeça errado que gerou o gol de Canobbio contra o Fluminense. Erro pontual, porém custoso.</span>
+        <div style="height:1px;background:var(--rule);margin:10px 0;"></div>
+        <span style="font-size:12.5px;color:#555;line-height:1.55;">Recuo de cabeça mal direcionado que originou o gol do Fluminense na virada do Maracanã. Erro pontual, mas com peso relevante no contexto do jogo.</span>
       </div>
     </div>
 
-    <div class="analysis-block" style="margin-top: 40px;">
-      <p>"O dado mais alarmante está na combinação: 13 gols pelo lado direito e 12 por erros individuais. Esses dois fatores ajudam a explicar a instabilidade defensiva do Vasco. Sobre a bola aérea: dos 9 gols sofridos por ações pelo alto, todos vieram de cruzamentos e cabeceios em jogo aberto. O modelo ofensivo de Renato tem um custo defensivo concreto e o corredor direito paga a maior conta."</p>
+    <div class="analysis-block" style="margin-top: 36px;">
+      <p>A combinação de 13 gols pelo lado direito e 12 por erros individuais não é coincidência — é a equação que define a fragilidade defensiva do Vasco em 2026. O corredor direito é o epicentro: quando o lateral sobe e não recupera em tempo, não há cobertura. O modelo ofensivo de Renato tem um custo defensivo real, e esse corredor paga a conta mais pesada.</p>
       <span class="author">— Análise tática · Incrível Futebol</span>
     </div>
   </div>
 </div>
 
 <!-- ── CRONOLOGIA ── -->
-<div class="container">
+<div id="cronologia" class="container">
   <div class="section">
     <div class="section-kicker">Jogo a jogo</div>
     <h2 class="section-title">A Cronologia da Temporada</h2>
-    <p class="section-lead">Dois momentos distintos dividem o Brasileiro do Vasco: o período do pesadelo sem Renato, e a fase de recuperação turbulenta com ele.</p>
+    <p class="section-lead">Dois momentos distintos dividem o Brasileirão do Vasco: o colapso inicial sem identidade tática e a recuperação turbulenta que veio com Renato Gaúcho — seguida por um fechamento em queda.</p>
 
     <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab(event, 'fase1')">📉 Fase 1 — Pesadelo (Jan–Fev)</button>
-      <button class="tab-btn" onclick="switchTab(event, 'fase2')">🔄 Fase 2 — Renato Chega (Mar)</button>
-      <button class="tab-btn" onclick="switchTab(event, 'fase3')">⚖️ Fase 3 — Oscilações (Abr–Mai)</button>
+      <button class="tab-btn active" onclick="switchTab(event,'fase1')">📉 Fase 1 — Pesadelo (Jan–Fev)</button>
+      <button class="tab-btn" onclick="switchTab(event,'fase2')">🔄 Fase 2 — Renato Chega (Mar)</button>
+      <button class="tab-btn" onclick="switchTab(event,'fase3')">⚖️ Fase 3 — Oscilações (Abr–Mai)</button>
     </div>
 
     <div class="tab-content active" id="fase1">
       <div class="timeline">
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">29/01 · Rodada 1</div>
+          <div class="tl-date">29/01 · R1</div>
           <div class="tl-match">Mirassol <span class="result loss">2×1</span> Vasco</div>
-          <div class="tl-note">Gol contra de <span style="color:var(--vermelho);font-weight:600;">Cuesta</span> e saída de bola errada de <span style="color:var(--vermelho);font-weight:600;">Piton</span> já na estreia. Felipe Coutinho e Puma tentaram, mas a defesa entregou o resultado.</div>
+          <div class="tl-note">Gol contra de <strong>Cuesta</strong> e erro de saída de <strong>Piton</strong> já na estreia. A derrota expôs uma equipe sem organização defensiva definida desde o início.</div>
           <span class="tl-badge falha">⚠ Falha defensiva</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot draw"></div>
-          <div class="tl-date">05/02 · Rodada 2</div>
+          <div class="tl-date">05/02 · R2</div>
           <div class="tl-match">Vasco <span class="result draw">1×1</span> Chapecoense</div>
-          <div class="tl-note">Puma abriu o placar, mas Léo Jardim falhou na cobrança de falta que garantiu o empate da Chape.</div>
+          <div class="tl-note">Puma abriu o placar, mas Léo Jardim falhou na cobrança de falta que garantiu o empate. Pontos cedidos por detalhe que o returno não pode repetir.</div>
           <span class="tl-badge falha">⚠ Falha do goleiro</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">11/02 · Rodada 3</div>
+          <div class="tl-date">11/02 · R3</div>
           <div class="tl-match">Vasco <span class="result loss">0×1</span> Bahia</div>
-          <div class="tl-note">Gol de Luciano Juba em bola aérea que a defesa vascaína assistiu. Falta de agressividade na área foi gritante.</div>
+          <div class="tl-note">Gol de Luciano Juba em bola aérea que a defesa vascaína assistiu sem disputa consistente. Falta de agressividade na área evidenciou problema que se repetiria ao longo da fase.</div>
           <span class="tl-badge falha">⚠ Bola aérea</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">26/02 · Rodada 4</div>
+          <div class="tl-date">26/02 · R4</div>
           <div class="tl-match">Santos <span class="result loss">2×1</span> Vasco</div>
-          <div class="tl-note"><span style="color:var(--vermelho);font-weight:600;">PH</span> e <span style="color:var(--vermelho);font-weight:600;">Saldívia</span> se atrapalharam, Neymar não perdoou. Vasco vai ao lanterninha. Quatro jogos, três derrotas.</div>
+          <div class="tl-note"><strong>PH</strong> e <strong>Saldívia</strong> se atrapalharam na saída, Neymar não desperdiçou. Quatro jogos, três derrotas, lanterna. O cenário que forçou a mudança de treinador.</div>
           <span class="tl-badge falha">⚠ Erro de comunicação</span>
         </div>
       </div>
@@ -803,30 +1182,30 @@
       <div class="timeline">
         <div class="tl-item">
           <div class="tl-dot win"></div>
-          <div class="tl-date">12/03 · Rodada 6</div>
+          <div class="tl-date">12/03 · R6</div>
           <div class="tl-match">Vasco <span class="result win">2×1</span> Palmeiras</div>
-          <div class="tl-note">Estreia de Renato. O time pressiona mais, explora os lados, ganha intensidade emocional. Vitória sobre o líder, mesmo com gol do Verdão nascendo de falha de Piton.</div>
-          <span class="tl-badge renato">⚡ Virada com Renato</span>
+          <div class="tl-note">Estreia de Renato. O time ganhou intensidade e verticalidade imediatas. Vitória sobre o líder, mesmo com o único gol do Verdão nascendo de falha de Piton — o padrão defensivo não desapareceu.</div>
+          <span class="tl-badge renato">⚡ Renato estreia</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot draw"></div>
-          <div class="tl-date">15/03 · Rodada 7</div>
+          <div class="tl-date">15/03 · R7</div>
           <div class="tl-match">Cruzeiro <span class="result draw">3×3</span> Vasco</div>
-          <div class="tl-note">Barros marca duas vezes. O Vasco ofensivo aparece, mas o Cruzeiro aproveita os espaços deixados. Três gols sofridos em bola aérea.</div>
-          <span class="tl-badge falha">⚠ Bola aérea (3x)</span>
+          <div class="tl-note">Barros marcou duas vezes. O Vasco ofensivo se manifestou, mas o Cruzeiro aproveitou os espaços nas costas dos laterais. Três gols sofridos por bola aérea no mesmo jogo — dado que sintetiza a vulnerabilidade estrutural.</div>
+          <span class="tl-badge falha">⚠ Bola aérea (3×)</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot win"></div>
-          <div class="tl-date">18/03 · Rodada 8</div>
+          <div class="tl-date">18/03 · R8</div>
           <div class="tl-match">Fluminense <span class="result win">2×3</span> Vasco</div>
-          <div class="tl-note">O maior jogo emocional da temporada. Saiu perdendo 2×0, virou no Maracanã com gols de Nuno Moreira, Spinelli e Thiago Mendes. Hugo Moura falhou no 1º gol do Flu.</div>
+          <div class="tl-note">Perdendo 2×0, virou no Maracanã com gols de Nuno Moreira, Spinelli e Thiago Mendes. O jogo emocional mais significativo da temporada — e também o que melhor ilustra a capacidade de resposta do grupo quando a adversidade é extrema.</div>
           <span class="tl-badge virada">✓ Virada histórica</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot win"></div>
-          <div class="tl-date">22/03 · Rodada 9</div>
+          <div class="tl-date">22/03 · R9</div>
           <div class="tl-match">Vasco <span class="result win">2×1</span> Grêmio</div>
-          <div class="tl-note">Cuiabano e David funcionam pelos lados. Vasco vence com controle, mesmo com Carlos Vinícius descontando no segundo tempo. Renato consolida o sistema ofensivo.</div>
+          <div class="tl-note">Cuiabano e David funcionaram pelos lados. Vasco venceu com algum controle, mesmo com Carlos Vinícius descontando. Sequência positiva consolidou a proposta de Renato.</div>
           <span class="tl-badge virada">✓ Vitória controlada</span>
         </div>
       </div>
@@ -836,107 +1215,103 @@
       <div class="timeline">
         <div class="tl-item">
           <div class="tl-dot draw"></div>
-          <div class="tl-date">01/04 · Rodada 10</div>
+          <div class="tl-date">01/04 · R10</div>
           <div class="tl-match">Coritiba <span class="result draw">1×1</span> Vasco</div>
-          <div class="tl-note">Tchê Tchê abriu com passe de PH. Empate em gol contra de Saldívia na tentativa de cortar. O padrão persiste.</div>
+          <div class="tl-note">Tchê Tchê abriu com passe de PH. Empate em gol contra de Saldívia na tentativa de corte. O ciclo de erro defensivo retornou mesmo com o time em momento positivo.</div>
           <span class="tl-badge falha">⚠ Gol contra Saldívia</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">04/04 · Rodada 11</div>
+          <div class="tl-date">04/04 · R11</div>
           <div class="tl-match">Vasco <span class="result loss">1×2</span> Botafogo</div>
-          <div class="tl-note">David fez o gol vascaíno. Mas o Botafogo virou dentro de São Januário com gol de cabeça e chute de fora da área. Derrota dolorosa em casa.</div>
+          <div class="tl-note">David fez o gol vascaíno. O Botafogo virou dentro de São Januário com gol de cabeça e chute de fora da área. Derrota em casa que interrompeu a sequência positiva.</div>
         </div>
         <div class="tl-item">
           <div class="tl-dot draw"></div>
-          <div class="tl-date">11/04 · Rodada 12</div>
+          <div class="tl-date">11/04 · R12</div>
           <div class="tl-match">Remo <span class="result draw">1×1</span> Vasco</div>
-          <div class="tl-note">Gómez abriu o placar em passe de Thiago Mendes, mas Marllon empatou de cabeça no final do jogo. Terceiro empate seguido fora de casa com gol cedido em bola aérea.</div>
+          <div class="tl-note">Gómez abriu o placar em passe de Thiago Mendes, mas Marllon empatou de cabeça no final. Terceiro empate seguido fora de casa com gol cedido em bola aérea — padrão que precisa de resposta no returno.</div>
           <span class="tl-badge falha">⚠ Bola aérea no fim</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot win"></div>
-          <div class="tl-date">18/04 · Rodada 13</div>
+          <div class="tl-date">18/04 · R13</div>
           <div class="tl-match">Vasco <span class="result win">2×1</span> São Paulo</div>
-          <div class="tl-note">São Paulo saiu na frente numa ligação longa de Rafael — <span style="color:var(--vermelho);font-weight:600;">Cuiabano</span> raspou de cabeça sem firmeza, Calleri chutou, Léo Jardim defendeu e Luciano aproveitou o rebote. Vasco empata em pênalti batido por Puma e Andrés Gómez faz a virada.</div>
+          <div class="tl-note">São Paulo saiu na frente via falha de <strong>Cuiabano</strong> — raspou sem firmeza, Calleri chutou, Léo Jardim defendeu e Luciano aproveitou o rebote. Vasco empatou em pênalti de Puma e Andrés Gómez fez a virada. Mais uma remontada.</div>
           <span class="tl-badge virada">✓ Mais uma virada</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">26/04 · Rodada 14</div>
+          <div class="tl-date">26/04 · R14</div>
           <div class="tl-match">Corinthians <span class="result loss">1×0</span> Vasco</div>
-          <div class="tl-note">Bidu aproveitou jogada pelo lado direito e finalizou para lacrar o Timão. Vasco teve posse dominante (60%), mas criou muito pouco.</div>
-          <span class="tl-badge falha">⚠ Eficiência zero</span>
+          <div class="tl-note">Bidu aproveitou jogada pelo lado direito. O Vasco teve 60% de posse e criou muito pouco. Um dos piores exemplos do paradoxo ofensivo da temporada.</div>
+          <span class="tl-badge falha">⚠ Ineficiência ofensiva</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot draw"></div>
-          <div class="tl-date">03/05 · Rodada 15</div>
+          <div class="tl-date">03/05 · R15</div>
           <div class="tl-match">Flamengo <span class="result draw">2×2</span> Vasco</div>
-          <div class="tl-note"><span style="color:var(--vermelho);font-weight:600;">R. Renan</span> e <span style="color:var(--vermelho);font-weight:600;">Cuesta</span> batem cabeça, Pedro abre o placar. <span style="color:var(--vermelho);font-weight:600;">PH</span> comete pênalti desnecessário, Jorginho faz o 2º. Vasco reage e empata, mas segue se autossabotando.</div>
-          <span class="tl-badge falha">⚠ 2 erros no mesmo jogo</span>
+          <div class="tl-note"><strong>R. Renan</strong> e <strong>Cuesta</strong> batem cabeça, Pedro abre. <strong>PH</strong> comete pênalti desnecessário, Jorginho faz o 2°. Vasco reage e empata — mas os dois gols sofridos têm erros identificáveis por trás.</div>
+          <span class="tl-badge falha">⚠ 2 erros, 2 gols</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot win"></div>
-          <div class="tl-date">11/05 · Rodada 15</div>
+          <div class="tl-date">11/05 · R15</div>
           <div class="tl-match">Vasco <span class="result win">1×0</span> Athletico-PR</div>
-          <div class="tl-note">Thiago Mendes resolve com gol no primeiro tempo em passe de Puma. Vasco sobe para a 8ª posição. Furacão pouco fez para reagir.</div>
+          <div class="tl-note">Thiago Mendes resolve com gol no primeiro tempo em passe de Puma. Vasco sobe para a 8ª posição. Uma das poucas atuações com solidez defensiva durante os 90 minutos.</div>
           <span class="tl-badge virada">✓ Vitória sólida</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">16/05 · Rodada 16</div>
+          <div class="tl-date">16/05 · R16</div>
           <div class="tl-match">Internacional <span class="result loss">4×1</span> Vasco</div>
-          <div class="tl-note">O pior jogo do ano. Contra-ataques, saída errada de Léo Jardim, sistema defensivo aberto. Colapso coletivo no Beira-Rio.</div>
+          <div class="tl-note">O pior jogo do ciclo. Saída errada de Léo Jardim, corredor direito escancarado, sistema defensivo sem linha de recuperação. Colapso coletivo no Beira-Rio — 4 gols em um único jogo.</div>
           <span class="tl-badge falha">⚠ Colapso defensivo</span>
         </div>
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">24/05 · Rodada 17</div>
+          <div class="tl-date">24/05 · R17</div>
           <div class="tl-match">Vasco <span class="result loss">0×3</span> Bragantino</div>
-          <div class="tl-note"><span style="color:var(--vermelho);font-weight:600;">Piton</span> corta mal no primeiro gol. <span style="color:var(--vermelho);font-weight:600;">Léo Jardim</span> aceita chute defensável no segundo. <span style="color:var(--vermelho);font-weight:600;">Saldívia</span> erra recuo de bola no terceiro. Uma sequência de vergonha técnica em São Januário.</div>
-          <span class="tl-badge falha">⚠ 2 falhas · 3 gols</span>
+          <div class="tl-note"><strong>Piton</strong> corta mal no 1°. <strong>Léo Jardim</strong> aceita chute defensável no 2°. <strong>Saldívia</strong> erra recuo no 3°. Sequência de falhas individuais que concentrou em um único jogo os três principais padrões de vulnerabilidade da temporada.</div>
+          <span class="tl-badge falha">⚠ 3 falhas, 3 gols</span>
         </div>
-      </div>
         <div class="tl-item">
           <div class="tl-dot loss"></div>
-          <div class="tl-date">31/05 · Rodada 18</div>
+          <div class="tl-date">31/05 · R18</div>
           <div class="tl-match">Vasco <span class="result loss">0×1</span> Atlético-MG</div>
-          <div class="tl-note">Vitor Hugo marcou de cabeça aos 32'. O Vasco teve 26 finalizações — recorde na temporada — 8 no gol, e não converteu nenhuma. Everson foi eleito melhor da partida com nota 9.1. Ineficiência máxima na última rodada antes da Copa.</div>
-          <span class="tl-badge falha">⚠ 26 chutes, 0 gol · Ineficiência máxima</span>
+          <div class="tl-note">Vitor Hugo marcou de cabeça aos 32'. O Vasco respondeu com <strong>26 finalizações</strong> — recorde na temporada — 8 no alvo, e não converteu nenhuma. Everson foi eleito melhor em campo. A despedida para a Copa resumiu o paradoxo: volume ofensivo alto, ineficiência máxima.</div>
+          <span class="tl-badge falha">⚠ 26 chutes, 0 gol</span>
         </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- ── ATAQUE ── -->
-<div class="container">
+<div id="ataque" class="container">
   <div class="section">
-    <div class="section-kicker">O lado bom</div>
-    <h2 class="section-title">Onde o Vasco Brilha</h2>
+    <div class="section-kicker">O lado positivo</div>
+    <h2 class="section-title">Onde o Vasco Produz</h2>
     <p class="section-lead">
-      Antes de qualquer coisa: esse time ataca. Ataca com vontade, ataca com volume, ataca com aquela raça que faz a torcida se levantar. São <span class="stat-inline">22</span> gols marcados em 18 jogos — e o número não conta tudo. Não conta a virada em 12 minutos no Maracanã. Não conta o gol de Thiago Mendes para fechar o Athletico. Não conta o pênalti de Puma que acendeu São Januário antes da virada sobre o São Paulo. Tem alma nesses gols. O problema é que a defesa às vezes apaga o que o ataque acende.
+      <span class="stat-inline">22</span> gols marcados em 18 rodadas, com <span class="stat-inline">17,7</span> finalizações por jogo — índice 30% acima da média da Série A. O ataque do Vasco existe, é volumoso e, em determinados jogos, é decisivo. O problema não está na criação. Está na conversão.
     </p>
 
     <div class="two-col">
       <div>
         <div class="chart-box">
           <div class="chart-title"><span class="dot" style="background:var(--verde)"></span>Artilheiros do Brasileiro 2026</div>
-          <div class="chart-wrap tall">
-            <canvas id="chartArtilheiros"></canvas>
-          </div>
+          <div class="chart-wrap tall"><canvas id="chartArtilheiros"></canvas></div>
         </div>
       </div>
       <div>
         <div class="chart-box">
           <div class="chart-title"><span class="dot" style="background:var(--dourado)"></span>Gols por Período do Jogo</div>
-          <div class="chart-wrap">
-            <canvas id="chartPeriodo"></canvas>
-          </div>
+          <div class="chart-wrap"><canvas id="chartPeriodo"></canvas></div>
         </div>
-
-        <div style="margin-top:20px; padding: 20px; background:#f9f7f2; border:1px solid #e4dfd5;">
-          <p style="font-size:14px; line-height:1.65; color:#444;">
-            📊 <strong>70% dos gols do Vasco saem no 2º tempo.</strong> Isso é mais do que estatística — é personalidade. É o time que respira fundo, sente o jogo e acorda quando o adversário já está comemorando. Tem coisa mais vascaína do que isso?
+        <div style="margin-top:16px;padding:18px 20px;background:#fff;border:1px solid #e2ddd4;border-left:3px solid var(--dourado);">
+          <p style="font-size:13.5px;line-height:1.68;color:#444;">
+            <strong style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;display:block;margin-bottom:6px;color:var(--azul-vasco);">70% dos gols marcados saem no 2° tempo</strong>
+            O Vasco cresce quando o adversário já está acomodado. É um dado que revela tanto a capacidade de pressão tardia do grupo quanto a dificuldade de impor ritmo desde o início — o que exige, no returno, melhoria no arranque dos primeiros 45 minutos.
           </p>
         </div>
       </div>
@@ -945,318 +1320,267 @@
 </div>
 
 <!-- ── VIRTUDES & DEFEITOS ── -->
-<div class="container">
-  <div class="section" style="padding-bottom: 0;">
+<div id="tatico" class="container">
+  <div class="section" style="padding-bottom:0;">
     <div class="section-kicker">Raio-X tático</div>
-    <h2 class="section-title">Virtudes &amp; Defeitos:</h2>
+    <h2 class="section-title">Virtudes &amp; Defeitos</h2>
   </div>
 </div>
 
-<div class="v-d-grid" style="max-width:1100px; margin: 0 auto 0;">
+<div class="v-d-grid" style="max-width:1140px;margin:0 auto;">
   <div class="vd-col virtudes">
-    <div class="vd-col-title">✓ Virtudes</div>
-
+    <div class="vd-col-title">✓ O que funciona</div>
     <div class="vd-item">
       <div class="vd-icon">⚡</div>
-      <div class="vd-text"><strong>Reação emocional</strong>Esse time não morre. Saiu perdendo de 2 a 0 no Maracanã e virou. Empatou o clássico com o Fla nos acréscimos. Não é sorte — é caráter. E caráter, no futebol brasileiro, vale ponto.</div>
+      <div class="vd-text"><strong>Capacidade de reação</strong>O time demonstrou, em múltiplos momentos, habilidade para reverter resultados adversos — a virada no Maracanã é o exemplo mais emblemático, mas o padrão se repete. Isso não é acidente: é um grupo que mantém tensão competitiva mesmo em desvantagem.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🎯</div>
-      <div class="vd-text"><strong>Jogo pelos lados</strong>Puma e os laterais ofensivos são uma das principais armas do Vasco. O time explora bem os corredores, cria largura, abre espaço. Quando a transição funciona, é bonito de ver.</div>
+      <div class="vd-text"><strong>Exploração dos corredores</strong>Puma e os laterais ofensivos são a principal arma de criação. O time constrói largura, abre espaço e cruza com regularidade. Quando a transição funciona em velocidade, o Vasco é difícil de defender.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🧠</div>
-      <div class="vd-text"><strong>Andrés Gómez nas entrelinhas</strong>Cresceu com Renato. Articula, combina, chega à área sem avisar. É o tipo de jogador que aparece quando o time mais precisa — e isso tem um valor que o xG não mede.</div>
+      <div class="vd-text"><strong>Andrés Gómez nas entrelinhas</strong>Cresceu com Renato. Articula, combina, chega à área sem sinalizar. Jogador que aparece em momentos decisivos — o tipo de perfil que o xG não captura completamente.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🏋️</div>
-      <div class="vd-text"><strong>Preparo físico no 2º tempo</strong>70% dos gols marcados saem no segundo tempo. O Vasco cresce quando o adversário cansa. É um time que joga os 90 minutos — e às vezes os últimos 20 são os melhores.</div>
+      <div class="vd-text"><strong>Pressão física no 2° tempo</strong>70% dos gols marcados saem no segundo tempo. O Vasco cresce quando o adversário cansa — dado consistente ao longo das 18 rodadas que indica preparo físico acima da média para o trecho final dos jogos.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">⚽</div>
-      <div class="vd-text"><strong>Eficiência ofensiva em bola aérea</strong>Thiago Mendes chega bem na área. Escanteios e cruzamentos resultaram em gols importantes ao longo da temporada. O que o adversário faz no alto contra o Vasco, o Vasco também sabe fazer.</div>
+      <div class="vd-text"><strong>Eficiência em bola aérea ofensiva</strong>Thiago Mendes chega bem na área. Escanteios e cruzamentos resultaram em gols importantes. A mesma fragilidade defensiva aérea coexiste com eficiência ofensiva pelo alto — o que revela problema de sistema, não de capacidade técnica.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">📈</div>
-      <div class="vd-text"><strong>Evolução com Renato</strong>De 8,3% de aproveitamento nas primeiras quatro rodadas para 37% após 18 rodadas. Não foi milagre — foi trabalho, foi crença, foi um time que encontrou um jeito de jogar e começou a acreditar nele.</div>
+      <div class="vd-text"><strong>Evolução sob Renato</strong>De 8,3% de aproveitamento nas primeiras quatro rodadas para 37% em 18. A troca de treinador produziu resultado mensurável. A questão agora é se o returno vai consolidar ou reverter essa curva.</div>
     </div>
   </div>
   <div class="vd-col defeitos">
-    <div class="vd-col-title">✗ Defeitos</div>
-
+    <div class="vd-col-title">✗ O que precisa mudar</div>
     <div class="vd-item">
       <div class="vd-icon">🔴</div>
-      <div class="vd-text"><strong>Erros individuais crônicos</strong>12 dos 29 gols sofridos têm um nome por trás. Piton errou três vezes. Léo Jardim e PH duas cada. São falhas que a estatística registra frio — mas que a torcida sente quente, na hora em que acontece, na hora em que o placar muda.</div>
-    </div>
-    <div class="vd-item">
-      <div class="vd-icon">🔴</div>
-      <div class="vd-text"><strong>Vulnerabilidade na bola aérea</strong>9 gols sofridos pelo alto. Cruzamentos que viram cabeceios livres, escanteios sem marcação no segundo poste. E 24 dos 29 gols saíram de dentro da área — o espaço que deveria ser o mais protegido do campo.</div>
+      <div class="vd-text"><strong>Erros individuais recorrentes</strong>12 dos 29 gols sofridos têm origem em falhas identificáveis. Piton com 3, Léo Jardim e PH com 2 cada. A recorrência elimina a hipótese de coincidência — são padrões de comportamento que o treinamento precisa corrigir.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🔴</div>
-      <div class="vd-text"><strong>Saídas de bola erradas</strong>3 gols nasceram de erro na saída — Léo Jardim no Inter, Piton no Mirassol, Saldívia no Bragantino. Jogar desde trás exige concentração e cobertura. Quando falta um dos dois, o adversário agradece.</div>
+      <div class="vd-text"><strong>Vulnerabilidade aérea defensiva</strong>9 gols sofridos em bola aérea — cruzamentos e cabeceios em jogo aberto que a defesa não disputa com firmeza. 24 dos 29 gols saíram de dentro da área, confirmando que o problema é de cobertura e agressividade no espaço mais crítico.</div>
+    </div>
+    <div class="vd-item">
+      <div class="vd-icon">🔴</div>
+      <div class="vd-text"><strong>Saídas de bola de risco</strong>3 gols nasceram de erro na saída — Léo Jardim contra o Inter, Piton contra o Mirassol, Saldívia contra o Bragantino. Construção desde o goleiro exige cobertura e concentração que o time ainda não sustenta por 90 minutos.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🟡</div>
-      <div class="vd-text"><strong>Corredor direito: a ferida aberta</strong>13 gols sofridos pelo lado direito da defesa. Quase metade de tudo. Quando o lateral sobe e perde a bola, não tem quem cubra. O Inter aproveitou isso quatro vezes em um único jogo — e foi o suficiente para acabar com a noite.</div>
+      <div class="vd-text"><strong>Corredor direito exposto</strong>13 gols sofridos pelo lado direito — quase metade do total. Quando o lateral avança e perde a bola, não há cobertura. O Inter aproveitou isso quatro vezes em um único jogo. Problema estrutural que exige solução tática no returno.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🟡</div>
-      <div class="vd-text"><strong>Falta de criatividade com superioridade</strong>Contra o Corinthians com 11 contra 10 o tempo todo, o Vasco mal criou. Isso é sinal de que o time ainda depende muito de reação e transição — e pouco de inteligência coletiva quando o espaço é maior.</div>
+      <div class="vd-text"><strong>Ineficiência com superioridade</strong>Contra o Corinthians com 11 versus 10, o Vasco criou pouco. Indica dependência de espaços em transição — e dificuldade em construir quando o adversário se fecha.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🟡</div>
-      <div class="vd-text"><strong>Arranque lento no 1º tempo</strong>O time acorda tarde. Nos últimos três jogos da parada, tomou o gol antes de entrar no ritmo. Correr atrás do placar é uma virtude — mas não ter que correr seria muito melhor.</div>
+      <div class="vd-text"><strong>Arranque lento no 1° tempo</strong>O time frequentemente concede o gol antes de entrar em ritmo. Correr atrás do placar é uma capacidade demonstrada — mas reduziria desgaste e risco se o time impusesse o jogo desde o início.</div>
     </div>
   </div>
 </div>
 
+<!-- ── LABORATÓRIO OFENSIVO ── -->
+<section id="laboratorio" class="section" style="background:#f5f3ed;">
+  <div class="container">
+    <div class="section-kicker">Dados coletivos · 18 partidas</div>
+    <h2 class="section-title">O Laboratório Ofensivo</h2>
+    <p class="section-lead">
+      319 finalizações. 38 grandes chances em 17 jogos com dado disponível. xG acumulado de 26,89 — o suficiente estatisticamente para 27 gols. O Vasco chegou, finalizou e criou oportunidades reais. Converteu 22. O déficit de quase 5 gols em relação ao esperado é o número que mais incomoda — e o que mais explica noites como a do Atlético-MG.
+    </p>
+
+    <div class="kpi-grid">
+      <div class="score-card neutral" style="background:#fff;border:1px solid #e2ddd4;border-top:3px solid var(--azul-vasco);padding:20px 12px;text-align:center;">
+        <span class="num" style="color:var(--azul-vasco);font-size:clamp(26px,4vw,44px);">17,7</span>
+        <span class="lbl" style="color:var(--cinza-medio);">Finalizações/jogo</span>
+      </div>
+      <div class="score-card neutral" style="background:#fff;border:1px solid #e2ddd4;border-top:3px solid var(--azul-vasco);padding:20px 12px;text-align:center;">
+        <span class="num" style="color:var(--azul-vasco);font-size:clamp(26px,4vw,44px);">1,49</span>
+        <span class="lbl" style="color:var(--cinza-medio);">xG médio/jogo</span>
+      </div>
+      <div class="score-card neutral" style="background:#fff;border:1px solid #e2ddd4;border-top:3px solid var(--azul-vasco);padding:20px 12px;text-align:center;">
+        <span class="num" style="color:var(--azul-vasco);font-size:clamp(26px,4vw,44px);">2,24</span>
+        <span class="lbl" style="color:var(--cinza-medio);">Grandes chances/jogo</span>
+      </div>
+      <div class="score-card neutral" style="background:#fff;border:1px solid #e2ddd4;border-top:3px solid var(--azul-vasco);padding:20px 12px;text-align:center;">
+        <span class="num" style="color:var(--azul-vasco);font-size:clamp(26px,4vw,44px);">52,4%</span>
+        <span class="lbl" style="color:var(--cinza-medio);">Posse média</span>
+      </div>
+      <div class="score-card neutral" style="background:#fff;border:1px solid #e2ddd4;border-top:3px solid var(--laranja);padding:20px 12px;text-align:center;">
+        <span class="num" style="color:var(--laranja);font-size:clamp(26px,4vw,44px);">81,8%</span>
+        <span class="lbl" style="color:var(--cinza-medio);">Eficiência xG</span>
+      </div>
+      <div class="score-card neutral" style="background:#fff;border:1px solid #e2ddd4;border-top:3px solid var(--vermelho);padding:20px 12px;text-align:center;">
+        <span class="num" style="color:var(--vermelho);font-size:clamp(26px,4vw,44px);">6,9%</span>
+        <span class="lbl" style="color:var(--cinza-medio);">Conversão de remates</span>
+      </div>
+    </div>
+
+    <div class="info-cards-grid">
+      <div class="info-card" style="border-left:3px solid var(--azul-vasco);">
+        <div class="info-card-label" style="color:var(--azul-vasco);">17,7 finalizações/jogo</div>
+        <p>A média da Série A gira entre 13 e 14 chutes por jogo. O Vasco está <strong>30% acima</strong>. O volume ofensivo é real e consistente — mas tem um custo no equilíbrio defensivo que os dados de gols sofridos tornam evidente.</p>
+      </div>
+      <div class="info-card" style="border-left:3px solid var(--azul-vasco);">
+        <div class="info-card-label" style="color:var(--azul-vasco);">1,49 xG médio/jogo</div>
+        <p>Pelo valor das chances criadas, o Vasco deveria ter marcado <strong>cerca de 27 gols</strong>. Marcou 22. Cinco gols que o modelo estatístico esperava e não entraram. Em termos de pontuação, isso pode representar entre 4 e 6 pontos a menos na tabela.</p>
+      </div>
+      <div class="info-card" style="border-left:3px solid var(--azul-vasco);">
+        <div class="info-card-label" style="color:var(--azul-vasco);">2,24 grandes chances/jogo</div>
+        <p>Mais de duas oportunidades claras por jogo — o Vasco chega com qualidade. O gargalo está na finalização: dentro da área, com tempo e espaço, o aproveitamento ainda é baixo para o nível de criação gerado.</p>
+      </div>
+      <div class="info-card" style="border-left:3px solid var(--dourado);">
+        <div class="info-card-label" style="color:#8a6e1a;">52,4% posse média</div>
+        <p>Controla a bola mais do que a média — mas controle de posse não se converteu em controle de resultado. <strong>Nos 8 jogos com mais de 55% de posse, o Vasco somou apenas 2 pontos.</strong> Com menos bola e mais espaço, o time venceu com mais frequência.</p>
+      </div>
+      <div class="info-card" style="border-left:3px solid var(--laranja);">
+        <div class="info-card-label" style="color:var(--laranja);">81,8% eficiência xG</div>
+        <p>Times eficientes ficam acima de 100% — marcam mais do que o modelo esperava. O Vasco ficou em 81,8%: converteu menos do que deveria. Quase 5 gols deixados pelo caminho — o equivalente a múltiplos pontos perdidos na tabela.</p>
+      </div>
+      <div class="info-card" style="border-left:3px solid var(--vermelho);">
+        <div class="info-card-label" style="color:var(--vermelho);">6,9% conversão de remates</div>
+        <p>A média do Brasileirão é de <strong>10 a 11%</strong>. O Vasco converte menos de 7 em cada 100 chutes. O jogo contra o Atlético-MG — 26 finalizações, zero gols — é o exemplo mais extremo, mas o padrão existe há 18 rodadas.</p>
+      </div>
+    </div>
+
+    <div class="grid-2col" style="margin-bottom:28px;">
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--azul-vasco)"></span>xG vs Gols Marcados — Jogo a Jogo</div>
+        <div class="chart-wrap tall"><canvas id="chartXG"></canvas></div>
+        <p style="font-size:11px;color:#aaa;margin-top:6px;line-height:1.4;">Barras azuis = xG esperado · Barras douradas = gols reais. Quando o dourado fica abaixo do azul, o Vasco subperformou.</p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--dourado)"></span>Finalizações × Gols por Jogo</div>
+        <div class="chart-wrap tall"><canvas id="chartFinEfic"></canvas></div>
+        <p style="font-size:11px;color:#aaa;margin-top:6px;line-height:1.4;">Eixo X = finalizações · Eixo Y = gols marcados. Chapecoense (30 chutes, 1 gol) é a anomalia extrema da temporada.</p>
+      </div>
+    </div>
+
+    <div class="chart-box" style="margin-bottom:28px;">
+      <div class="chart-title"><span class="dot" style="background:var(--azul-claro)"></span>Posse de Bola por Jogo · O Paradoxo Vascaíno</div>
+      <div class="chart-wrap tall"><canvas id="chartPosse"></canvas></div>
+      <p style="font-size:11px;color:#aaa;margin-top:6px;line-height:1.4;">Linha azul = posse (%). Pontos coloridos = resultado (verde = vitória, amarelo = empate, vermelho = derrota). O Vasco vence mais com menos bola.</p>
+    </div>
+
+    <div class="grid-2col" style="margin-bottom:28px;">
+      <div class="chart-box">
+        <div class="chart-title" style="color:var(--vermelho);">⚠ O Paradoxo da Posse</div>
+        <p style="font-size:14px;line-height:1.75;color:#444;">Em <strong>8 dos 18 jogos</strong> o Vasco teve mais de 55% de posse — e somou apenas <strong>2 pontos</strong>: 2 empates, 6 derrotas. O pior caso foi contra a Chapecoense: <strong>67% de posse, 4,81 xG</strong>, 9 grandes chances criadas. E 1 gol marcado.<br><br>Com 37% de posse contra o Grêmio, venceu. Com 38% contra o São Paulo, virou. A conclusão é clara: o Vasco é mais eficiente em transição do que em construção posicional.</p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title" style="color:var(--azul-vasco);">✦ Volume Alto, Conversão Baixa</div>
+        <p style="font-size:14px;line-height:1.75;color:#444;"><strong>17,7 finalizações por jogo</strong> colocam o Vasco entre os times mais ofensivos da Série A. Mas a conversão de <strong>6,9%</strong> — quando a média nacional fica entre 10 e 11% — indica que o problema não é de chegada, mas de definição.<br><br>O xG acumulado de <strong>26,89</strong> contra <strong>22 gols</strong> marcados confirma o diagnóstico: quase 5 gols deixados pelo caminho. O Atlético-MG foi o exemplo mais agudo — mas o padrão atravessa toda a fase.</p>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title"><span class="dot" style="background:var(--verde)"></span>Perfil Médio por Resultado — Vitórias × Empates × Derrotas</div>
+      <div class="chart-wrap" style="max-height:360px;"><canvas id="chartRadarResultado"></canvas></div>
+      <p style="font-size:11px;color:#aaa;margin-top:6px;line-height:1.4;">Comparação das médias ofensivas nos jogos em que o Vasco venceu, empatou e perdeu. Quanto maior a área, melhor o desempenho.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PADRÕES ── -->
+<section id="padroes" class="section">
+  <div class="container">
+    <div class="section-kicker">Compilação · 18 rodadas</div>
+    <h2 class="section-title">Os Padrões da Temporada</h2>
+    <p class="section-lead">
+      Cruzando os 18 jogos registrados, emergem padrões estruturais que se repetem com frequência suficiente para serem tratados como características consolidadas — não como oscilações eventuais.
+    </p>
+
+    <div class="analysis-block">
+      <p>O Vasco de 2026 é um time que reage melhor do que constrói, que cria mais do que converte e que ataca pelos corredores pagando preço defensivo nos mesmos corredores. A temporada não produziu um time desequilibrado para um lado só — produziu um time contraditório, capaz de excelência e de colapso dentro da mesma semana.</p>
+      <span class="author">Padrão extraído · 18 rodadas · 29 gols sofridos · 22 marcados</span>
+    </div>
+
+    <div class="patterns-grid">
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--vermelho)"></span>Defensivo — Bola Aérea</div>
+        <p style="font-size:14px;line-height:1.65;color:#444;">
+          <strong>9 gols sofridos em bola aérea</strong> — cruzamentos e cabeceios em jogo aberto que a defesa não disputa com firmeza. O padrão é recorrente: Cruzeiro (3 cabeceios), Remo (no final), Botafogo (cruzado), Bahia (escanteio). A defesa não cobre o segundo poste consistentemente e perde o duelo aéreo mesmo com tempo de organização disponível.
+        </p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--laranja)"></span>Gols Cedidos nos Acréscimos</div>
+        <p style="font-size:14px;line-height:1.65;color:#444;">
+          <strong>3 jogos consecutivos fora de casa</strong> (Cruzeiro, Coritiba, Remo) o Vasco estava à frente e cedeu o empate. Em todos: bola aérea no trecho final, com o time acomodado no resultado. O padrão combina dois problemas — gestão de resultado e concentração defensiva nos momentos de menor pressão aparente.
+        </p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--azul-vasco)"></span>Ofensivo — Virada no 2° Tempo</div>
+        <p style="font-size:14px;line-height:1.65;color:#444;">
+          <strong>70% dos gols marcados saem no 2° tempo.</strong> O Vasco saiu de <strong>1 ponto em 4 jogos</strong> para 20 em 18 justamente por reagir quando está atrás. Isso é o estilo de Renato: pressão física crescente e exploração do cansaço adversário. A limitação é que o time frequentemente começa abaixo do nível exigido, forçando a remontada.
+        </p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--azul-claro)"></span>Laterais como Motor e Problema</div>
+        <p style="font-size:14px;line-height:1.65;color:#444;">
+          <strong>Puma e Cuiabano somam 8 assistências</strong> — mais do que qualquer meia do elenco. O Vasco cria pelos corredores. Mas os mesmos laterais que atacam <strong>deixam o espaço exposto nas costas</strong>. O lado direito concentra 13 dos 29 gols sofridos; o esquerdo, outros 9. Juntos, os dois corredores explicam <strong>22 dos 29 gols cedidos</strong>.
+        </p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--vermelho)"></span>Contra-ataque como Kryptonita</div>
+        <p style="font-size:14px;line-height:1.65;color:#444;">
+          <strong>3 gols sofridos em transição rápida</strong> — o custo direto do modelo agressivo. O Inter fez 2 gols assim em um único jogo com o corredor direito escancarado; o Santos (Neymar) explorou o mesmo padrão. Quando o Vasco perde a bola adiantado, os zagueiros ficam em desvantagem numérica sem cobertura de volante suficientemente rápida.
+        </p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="dot" style="background:var(--verde)"></span>Thiago Mendes como Referência</div>
+        <p style="font-size:14px;line-height:1.65;color:#444;">
+          <strong>4 gols e função de pivô</strong> — Thiago Mendes é o jogador mais decisivo do Vasco na fase. Cabeceio, finalização de dentro, distribuição para laterais. Um volante exercendo função de segundo atacante. Quando esteve fora (Inter), o time perdeu referência e o colapso foi mais grave. A dependência de um único jogador é um risco estrutural.
+        </p>
+      </div>
+    </div>
+
+    <div class="pull-quote" style="margin-top:48px;">
+      "Em 18 rodadas, o Vasco marcou em 13 jogos e sofreu em 16. Fechou a fase com 26 finalizações e nenhum gol contra o Atlético-MG. 13 dos 29 gols sofridos vieram pelo lado direito. A equação é clara: volume ofensivo alto, defesa estruturalmente vulnerável, ineficiência na conversão."
+    </div>
+
+    <div class="context-box">
+      <div class="section-kicker" style="margin-bottom:14px;">Contexto histórico · Comparação</div>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--azul-vasco);margin-bottom:16px;letter-spacing:1px;">O que os números dizem sobre o ciclo</h3>
+      <p style="font-size:15px;line-height:1.78;color:#444;max-width:760px;">
+        O Vasco de 2026 reproduz um ciclo recorrente: <strong>instabilidade defensiva crônica + dependência de individualidades ofensivas + mudança de treinador como solução emergencial</strong>. Renato Gaúcho estancou a queda livre — de 8% para 37% de aproveitamento — mas sem reformar o sistema defensivo. A taxa de <strong>1,61 gols sofridos por jogo</strong> coloca o clube entre os piores defensivamente na faixa que disputa o meio da tabela. Para referência: equipes que terminam no G-6 costumam ter média abaixo de 1,1 gol sofrido por partida.<br><br>
+        A matemática do returno tem uma lógica clara: <strong>se o Vasco reduzir de 1,61 para 1,2 gols sofridos por jogo</strong> — corrigindo especificamente o corredor direito (13 gols) e os erros individuais (12 gols) — com a mesma produção ofensiva, volta a competir na metade superior da tabela. Sem essa correção, o risco de permanecer próximo à zona de turbulência segue presente.
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- ── CONCLUSÃO ── -->
-<div class="container">
+<div id="conclusao" class="container">
   <div class="section">
-    <div class="section-kicker">Conclusão</div>
-    <h2 class="section-title">O Diagnóstico Final</h2>
+    <div class="section-kicker">Diagnóstico</div>
+    <h2 class="section-title">O Retrato das 18 Rodadas</h2>
 
-    <p style="font-size: clamp(16px,2vw,18px); line-height:1.8; color:#333; max-width:760px; margin-bottom:24px;">
-      O Vasco não fecha as 18 rodadas como um time em evolução estável. Fecha como um time contraditório e em queda no recorte mais recente. A recuperação com Renato existiu — de 1 ponto em 4 jogos para 20 pontos em 18 rodadas —, mas foi interrompida por três derrotas consecutivas, oito gols sofridos e apenas um marcado.
+    <p class="body-text" style="font-size:clamp(15.5px,1.9vw,18px);">
+      O Vasco não fecha a primeira fase como um time em evolução estável. Fecha como um time que recuperou patamar em relação ao início catastrófico, mas que encerrou o período em queda — três derrotas consecutivas, oito gols sofridos e apenas um marcado nos três últimos jogos. A parada para a Copa chegou na hora certa, mas os problemas estruturais não tiram férias.
     </p>
-    <p style="font-size: clamp(16px,2vw,18px); line-height:1.8; color:#333; max-width:760px; margin-bottom:24px;">
-      Os 20 pontos ainda mostram que houve reação em relação ao início, mas os 29 gols sofridos indicam que a defesa segue sendo o problema central da campanha. <strong class="stat-inline">12</strong> dos <strong class="stat-inline">29</strong> gols sofridos não precisariam ter acontecido. São três pontos aqui, dois ali — o suficiente para transformar a campanha de regular em consistente.
+    <p class="body-text" style="font-size:clamp(15.5px,1.9vw,18px);">
+      Os 20 pontos mostram que houve recuperação. Os 29 gols sofridos mostram que o sistema defensivo continua sendo o freio principal da campanha. <strong>12</strong> dos <strong>29</strong> gols não precisariam ter acontecido. São erros que, se corrigidos, podem representar entre 4 e 6 pontos adicionais na tabela — diferença entre o meio e a parte superior da classificação.
     </p>
-    <p style="font-size: clamp(16px,2vw,18px); line-height:1.8; color:#333; max-width:760px;">
-      A parada para a Copa chegou. Em 18 rodadas, o Vasco conquistou 20 pontos, 5 vitórias, 5 empates e 8 derrotas. O retrato da despedida resume o paradoxo: 26 finalizações e 0 gol contra o Atlético-MG — potencial ofensivo alto, fragilidade defensiva crônica, ineficiência na hora de decidir. Sem corrigir bola aérea, cobertura dos laterais, saída de bola e erros individuais, o bom volume ofensivo continuará insuficiente. Se corrigir a defesa no returno, o Vasco pode voltar a competir na metade de cima da tabela. Sem isso, o risco é ficar preso na briga contra a parte baixa.
+    <p class="body-text" style="font-size:clamp(15.5px,1.9vw,18px);">
+      A despedida para a Copa resumiu o paradoxo da temporada: 26 finalizações, 8 no alvo, zero gols contra o Atlético-MG. Potencial ofensivo demonstrado, fragilidade defensiva persistente, ineficiência de finalização. Três variáveis que o returno precisa endereçar em paralelo — porque corrigir apenas uma não muda o resultado da equação.
     </p>
 
-    <div class="analysis-block" style="margin-top: 36px;">
-      <p>"<strong style='color:var(--dourado)'>37% de aproveitamento</strong> dizem que o Vasco estancou a queda livre. Mas a média de <strong style='color:var(--dourado)'>1,61 gols sofridos por jogo</strong> diz que a defesa ainda está em obras. Na equação do futebol brasileiro, construção ofensiva sem solidez defensiva produz um time agradável de assistir — e difícil de torcer."</p>
+    <div class="analysis-block" style="margin-top:36px;">
+      <p>"<strong style='color:var(--dourado);'>37% de aproveitamento</strong> confirmam que o Vasco recuperou o mínimo de competitividade. Mas a média de <strong style='color:var(--dourado);'>1,61 gols sofridos por jogo</strong> diz que a defesa ainda funciona como o principal limitador da campanha. No futebol brasileiro, construção ofensiva sem solidez defensiva produz times agradáveis de assistir — e difíceis de torcer até o apito final."</p>
       <span class="author">— Editorial · Incrível Futebol · Maio de 2026</span>
     </div>
   </div>
 </div>
 
 <!-- ── FOOTER ── -->
-
-  <!-- ══════════════════════════════════════════
-     SEÇÃO: LABORATÓRIO OFENSIVO — ESTATÍSTICAS COLETIVAS
-══════════════════════════════════════════ -->
-<section class="section" style="background:#fafaf8;">
-  <div class="container">
-    <div class="section-kicker">Dados coletivos · 18 partidas com registro</div>
-    <h2 class="section-title">O Laboratório Ofensivo</h2>
-    <p class="section-lead">
-      319 finalizações. Trinta e oito grandes chances em 17 jogos. Um xG de 26,89 — o suficiente para ter marcado quase 27 gols. O Vasco criou, chegou, finalizou. E marcou 22. Cinco gols ficaram na gaveta da estatística, nas mãos dos goleiros, nas traves, na pontaria errada de quem estava na hora certa no lugar certo mas não conseguiu empurrar a bola pra rede. Isso é futebol. E isso também é frustração.
-    </p>
-
-    <!-- KPIs principais -->
-    <div class="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:48px;">
-      <div class="score-card neutral" style="text-align:center;padding:20px 12px;">
-        <span class="num" style="color:var(--azul-vasco);">17,7</span>
-        <span class="lbl">Finalizações/jogo</span>
-      </div>
-      <div class="score-card neutral" style="text-align:center;padding:20px 12px;">
-        <span class="num" style="color:var(--azul-vasco);">1,49</span>
-        <span class="lbl">xG médio/jogo</span>
-      </div>
-      <div class="score-card neutral" style="text-align:center;padding:20px 12px;">
-        <span class="num" style="color:var(--azul-vasco);">2,24</span>
-        <span class="lbl">Grandes chances/jogo</span>
-      </div>
-      <div class="score-card neutral" style="text-align:center;padding:20px 12px;">
-        <span class="num" style="color:var(--azul-vasco);">52,4%</span>
-        <span class="lbl">Posse média</span>
-      </div>
-      <div class="score-card neutral" style="text-align:center;padding:20px 12px;">
-        <span class="num" style="color:var(--laranja);">81,8%</span>
-        <span class="lbl">Eficiência xG</span>
-      </div>
-      <div class="score-card neutral" style="text-align:center;padding:20px 12px;">
-        <span class="num" style="color:var(--laranja);">6,9%</span>
-        <span class="lbl">Conversão remates</span>
-      </div>
-    </div>
-
-    <!-- Leitura dos KPIs -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:48px;">
-
-      <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
-        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">17,7 finalizações/jogo</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">A média da Série A gira em torno de 13 a 14 chutes por jogo. O Vasco está <strong>30% acima disso</strong>. Esse time vai ao ataque. Vai com frequência, vai com vontade — e às vezes vai de vez demais e deixa o corredor aberto nas costas. Mas vai. E isso tem valor.</p>
-      </div>
-
-      <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
-        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">1,49 xG médio/jogo</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">Pelo valor das chances criadas, o Vasco deveria ter marcado <strong>cerca de 27 gols</strong> em 18 rodadas. Marcou 22. Cinco gols que existiram na estatística e não entraram na rede. Cinco gols que poderiam ser seis pontos a mais na tabela. É muita coisa.</p>
-      </div>
-
-      <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
-        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">2,24 grandes chances/jogo</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">"Grande chance" é aquela que faz o torcedor se levantar do sofá antes do chute. O Vasco cria <strong>mais de duas por jogo</strong> — chega com qualidade, chega perto. O problema não é a chegada. É o que acontece quando a bola para no pé dentro da área.</p>
-      </div>
-
-      <div style="background:#fff;border-left:3px solid var(--dourado);padding:16px 18px;">
-        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#8a6e1a;text-transform:uppercase;margin-bottom:6px;">52,4% posse média</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">Controla a bola — mas controlar a bola não controla o resultado. O paradoxo cruel da temporada: <strong>nas 8 partidas com mais de 55% de posse, o Vasco somou apenas 2 pontos.</strong> Contra o Grêmio, com 37% de posse, venceu com conforto. O time é mais perigoso quando corre do que quando caminha.</p>
-      </div>
-
-      <div style="background:#fff;border-left:3px solid var(--laranja);padding:16px 18px;">
-        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--laranja);text-transform:uppercase;margin-bottom:6px;">81,8% eficiência xG</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">Times eficientes ficam acima de 100% — ou seja, marcam mais do que o modelo esperava. O Vasco ficou em <strong>81,8%</strong>: converteu menos do que deveria. São quase 5 gols deixados pelo caminho. Cinco gols que, em noites como a do Atlético-MG, a torcida sentiu na alma sem nem saber o número.</p>
-      </div>
-
-      <div style="background:#fff;border-left:3px solid var(--vermelho);padding:16px 18px;">
-        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--vermelho);text-transform:uppercase;margin-bottom:6px;">6,9% conversão de remates</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">O número que mais dói. A média do Brasileirão é de <strong>10 a 11%</strong>. O Vasco converte menos de 7 em cada 100 chutes. O jogo contra o Atlético-MG virou símbolo: 26 finalizações, nenhum gol, Everson eleito melhor da partida com nota 9,1. Mas esse padrão não nasceu naquele dia — ele está aqui há 18 rodadas.</p>
-      </div>
-
-    </div>
-
-    <!-- Gráficos lado a lado -->
-    <div class="grid-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:40px;">
-
-      <!-- Chart: xG vs Gols por jogo (barras agrupadas) -->
-      <div class="chart-box">
-        <div class="chart-title"><span class="dot" style="background:var(--azul-vasco)"></span>xG vs Gols Marcados — Jogo a Jogo</div>
-        <div class="chart-wrap tall"><canvas id="chartXG"></canvas></div>
-        <p style="font-size:11px;color:#aaa;margin-top:4px;line-height:1.4;">* Grandes chances: dado ausente no jogo vs Bahia (N/A nos PDFs originais). Média calculada sobre 15 jogos válidos.</p>
-      <p style="font-size:12px;color:#888;margin-top:8px;line-height:1.5;">Barras azuis = xG esperado · Barras douradas = gols reais. Quando o dourado fica abaixo do azul, o Vasco subperformou.</p>
-      </div>
-
-      <!-- Chart: Finalizações vs Gols (scatter/bubble) -->
-      <div class="chart-box">
-        <div class="chart-title"><span class="dot" style="background:var(--dourado)"></span>Finalizações × Eficiência por Jogo</div>
-        <div class="chart-wrap tall"><canvas id="chartFinEfic"></canvas></div>
-        <p style="font-size:12px;color:#888;margin-top:8px;line-height:1.5;">Eixo X = finalizações · Eixo Y = gols marcados. Posição ideal: alto-direita. Chapecoense (30 chutes, 1 gol) é a anomalia máxima.</p>
-      </div>
-
-    </div>
-
-    <!-- Chart: Posse de bola por jogo (linha) -->
-    <div class="chart-box" style="margin-bottom:40px;">
-      <div class="chart-title"><span class="dot" style="background:var(--azul-claro,#2952b3)"></span>Posse de Bola por Jogo · O Paradoxo Vascaíno</div>
-      <div class="chart-wrap tall"><canvas id="chartPosse"></canvas></div>
-      <p style="font-size:12px;color:#888;margin-top:8px;line-height:1.5;">Linha azul = posse (%). Círculos coloridos = resultado (verde=vitória, amarelo=empate, vermelho=derrota). O Vasco vence mais com <strong>menos</strong> bola.</p>
-    </div>
-
-    <!-- Análise do paradoxo -->
-    <div class="grid-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:40px;">
-      <div class="chart-box">
-        <div class="chart-title" style="color:var(--vermelho)">⚠ O Paradoxo da Posse</div>
-        <p style="font-size:14px;line-height:1.75;color:#444;">
-          Mais bola, menos resultado. Em <strong>8 dos 18 jogos</strong> o Vasco teve mais de 55% de posse — e somou apenas <strong>2 pontos</strong> nesses confrontos: 2 empates, 6 derrotas. O pior exemplo foi contra a Chapecoense: <strong>67% de posse, 4,81 xG</strong>, 9 grandes chances criadas. E 1 gol.<br><br>
-          Mas quando jogou no contra-ataque, com menos bola e mais espaço, o Vasco voou. Com 37% de posse contra o Grêmio, venceu. Com 38% contra o São Paulo, virou. O time não é lento — é mal aproveitado quando tem a bola demais no pé.
-        </p>
-      </div>
-      <div class="chart-box">
-        <div class="chart-title" style="color:var(--azul-vasco)">✦ A Máquina de Criar — e Desperdiçar</div>
-        <p style="font-size:14px;line-height:1.75;color:#444;">
-          <strong>17,7 finalizações por jogo</strong> colocam o Vasco entre os times mais agressivos da Série A. Mas a conversão de apenas <strong>6,9%</strong> — quando a média nacional é de 10 a 11% — revela que atacar muito não é o suficiente quando a bola não entra.<br><br>
-          O xG acumulado de <strong>26,89</strong> contra <strong>22 gols</strong> marcados confirma o diagnóstico: o Vasco criou oportunidades para ter <strong>quase 5 gols a mais</strong>. E o jogo contra o Atlético-MG foi o grito mais alto dessa contradição — 26 chutes, nenhuma vez que a bola cruzou a linha. Um número que vai ficar na memória de quem torce.
-        </p>
-      </div>
-    </div>
-
-    <!-- Chart: Radar de métricas ofensivas por clusters de resultado -->
-    <div class="chart-box">
-      <div class="chart-title"><span class="dot" style="background:var(--verde)"></span>Perfil Médio por Resultado — Vitórias × Empates × Derrotas</div>
-      <div class="chart-wrap" style="max-height:360px;"><canvas id="chartRadarResultado"></canvas></div>
-      <p style="font-size:12px;color:#888;margin-top:8px;line-height:1.5;">Comparação das médias ofensivas nos jogos em que o Vasco venceu, empatou e perdeu. Quanto maior a área, melhor o desempenho.</p>
-    </div>
-
-  </div>
-</section>
-
-
-  <!-- ══════════════════════════════════════════
-       SEÇÃO: PADRÕES IDENTIFICADOS
-  ══════════════════════════════════════════ -->
-  <section class="section">
-    <div class="container">
-      <div class="section-kicker">Compilações arquivadas · Contexto</div>
-      <h2 class="section-title">O Padrão do Vasco em 2026</h2>
-      <p class="section-lead">
-        Cruzando os 18 jogos registrados no arquivo, emergem padrões estruturais que se repetem — e que definem o DNA contraditório desta equipe.
-      </p>
-
-      <div class="analysis-block">
-        <p>O Vasco de 2026 é o time das viradas e dos gols sofridos no fim. Emocional, intenso, inconstante. Cresce no segundo tempo, mas sangra pela defesa durante toda a temporada.</p>
-        <span class="author">Padrão extraído · 18 rodadas · 29 gols sofridos · 22 marcados</span>
-      </div>
-
-      <!-- Grid de padrões -->
-      <div class="patterns-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:32px;">
-
-        <div class="chart-box">
-          <div class="chart-title"><span class="dot" style="background:var(--vermelho)"></span>PADRÃO DEFENSIVO — BOLA AÉREA MATA</div>
-          <p style="font-size:14px;line-height:1.65;color:#444;">
-            <strong>9 gols sofridos em bola aérea</strong> — cruzamentos e cabeceios em jogo aberto que a defesa simplesmente não disputa com firmeza.<br><br>
-            O padrão é recorrente: Cruzeiro (3 cabeceios), Remo (cabeceio no final), Botafogo (cabeceio cruzado), Bahia (escanteio livre). A defesa não cobre o segundo poste e perde o duelo aéreo mesmo quando tem tempo para se organizar.
-          </p>
-        </div>
-
-        <div class="chart-box">
-          <div class="chart-title"><span class="dot" style="background:var(--laranja)"></span>PADRÃO — GOLS CEDIDOS NOS ACRÉSCIMOS</div>
-          <p style="font-size:14px;line-height:1.65;color:#444;">
-            <strong>3 jogos em sequência fora de casa</strong> (Cruzeiro, Coritiba e Remo) o Vasco estava vencendo e cedeu o empate. Em todos os casos: <strong>bola aérea no final do jogo</strong>, com o time já acomodado no resultado — o gol do Remo saiu antes dos acréscimos, mas igualmente com a marcação adormecida.<br><br>
-            Isso revela dois problemas combinados: gestão emocional do resultado e marcação zona frouxíssima em situações de bola aérea no final das partidas.
-          </p>
-        </div>
-
-        <div class="chart-box">
-          <div class="chart-title"><span class="dot" style="background:var(--azul-vasco)"></span>PADRÃO OFENSIVO — VIRADA NO 2º TEMPO</div>
-          <p style="font-size:14px;line-height:1.65;color:#444;">
-            <strong>70% dos gols marcados saem no 2º tempo.</strong> O Vasco arrancou de <strong>1 ponto em 4 jogos</strong> para 20 pontos em 18 rodadas justamente por reagir quando está atrás: virou o Palmeiras, o Flu no Maracanã, e buscou o empate contra o Flamengo com 2 gols nos minutos finais.<br><br>
-            Isso não é acidente — é o estilo de Renato Gaúcho: times que empurram fisicamente no 2T e exploram o cansaço adversário. O problema é que começa cada jogo abaixo do nível exigido.
-          </p>
-        </div>
-
-        <div class="chart-box">
-          <div class="chart-title"><span class="dot" style="background:var(--azul-claro)"></span>PADRÃO — LATERAIS COMO MOTOR OFENSIVO</div>
-          <p style="font-size:14px;line-height:1.65;color:#444;">
-            <strong>Puma Rodríguez e Cuiabano somam 8 assistências</strong> — mais do que qualquer meia da equipe. O Vasco cria pelo corredor, cruza, e finaliza. É um padrão consistente: Gómez aparece na segunda trave, Thiago Mendes cabecea, e os laterais entregam.<br><br>
-            O problema: os mesmos laterais que atacam <strong>deixam as costas expostas</strong>. O lado direito (PH) concentra sozinho <strong>13 dos 29 gols sofridos</strong>. O lado esquerdo (Piton), outros 9. Piton lidera o ranking de falhas individuais com 3 erros diretos. Juntos, os dois corredores explicam <strong>22 dos 29 gols sofridos</strong> — os laterais são o epicentro do problema defensivo do Vasco.
-          </p>
-        </div>
-
-        <div class="chart-box">
-          <div class="chart-title"><span class="dot" style="background:var(--vermelho)"></span>PADRÃO — CONTRA-ATAQUE É A KRYPTONITA</div>
-          <p style="font-size:14px;line-height:1.65;color:#444;">
-            <strong>3 gols sofridos em transição rápida</strong> — o custo direto do estilo agressivo de Renato. O Inter fez 2 gols assim em um único jogo, com o corredor direito completamente aberto. Santos (Neymar) também explorou o mesmo padrão.<br><br>
-            Sempre que o Vasco perde a bola adiantado, os zagueiros ficam em desvantagem numérica. Não há volante que recue rápido o suficiente para cobrir os laterais desposicionados.
-          </p>
-        </div>
-
-        <div class="chart-box">
-          <div class="chart-title"><span class="dot" style="background:var(--verde)"></span>PADRÃO — THIAGO MENDES COMO REFERÊNCIA OFENSIVA</div>
-          <p style="font-size:14px;line-height:1.65;color:#444;">
-            <strong>4 gols e papel de pivô</strong> — Thiago Mendes é o jogador mais decisivo do Vasco em 2026. Ele aparece na área, cabecea, finaliza de dentro, e ainda distribui para os laterais. É um volante jogando como segundo centroavante.<br><br>
-            Quando está suspenso ou fora (como no Internacional), o time perde referência ofensiva e o colapso fica mais provável. O jogo de 4×1 contra o Inter foi sem ele.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Pull quote contextual -->
-      <div class="pull-quote" style="margin-top:48px;">
-        "Em 18 rodadas, o Vasco marcou em 13 jogos — mas sofreu em 16. Fechou a fase com 0 gol em 26 finalizações contra o Atlético-MG. O dado mais alarmante: 13 dos 29 gols sofridos vieram pelo lado direito. Uma defesa que sangra. Um ataque que cria e desperdiça."
-      </div>
-
-      <!-- Contextualização histórica -->
-      <div class="context-box" style="margin-top:40px;background:#f8f6f1;border:1px solid #e4dfd5;border-radius:4px;padding:28px 32px;">
-        <div class="section-kicker" style="margin-bottom:12px;">Contexto histórico · Comparação</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--azul-vasco);margin-bottom:16px;letter-spacing:1px;">O que esses números dizem sobre o ciclo do clube</h3>
-        <p style="font-size:15px;line-height:1.75;color:#444;max-width:760px;">
-          O Vasco de 2026 repete um ciclo familiar: <strong>instabilidade defensiva crônica + dependência de individualidades ofensivas + troca de técnico</strong> como solução de curto prazo. Renato Gaúcho conseguiu estancar a queda livre (de 8% para 37% de aproveitamento), mas sem reformar o sistema defensivo. A taxa de <strong>1,61 gols sofridos por jogo</strong> coloca o time entre os piores defensivamente entre os clubes que brigam pelo meio da tabela. Para comparação: clubes que terminam no G-6 costumam ter média abaixo de 1,1 gol sofrido por jogo.<br><br>
-          O segundo turno dirá se Renato consegue corrigir o sistema — ou se a equipe vai depender novamente das viradas emocionais para somar pontos. A matemática já está clara: <strong>se o Vasco reduzir de 1,61 para 1,2 gols sofridos por jogo — atacando o lado direito (13 gols) e os erros individuais (12 gols) como prioridade no returno</strong>, com a mesma produção ofensiva, poderá voltar a competir na metade de cima da tabela. Sem isso, o risco é ficar preso na briga contra a parte baixa.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
 <div class="footer">
   <div class="footer-inner">
     <p>INCRÍVEL FUTEBOL · ESPECIAL VASCO 2026<br>Reportagem de dados baseada em anotações de campo e registros jogo a jogo do Brasileirão Série A 2026</p>
-    <p class="sources" style="margin-top:16px;">
+    <p class="sources">
       FONTES: Anotações de caderno (jan–mai 2026) · NETVASCO · Sofascore · BemParaná · OGol · ESPN Brasil<br>
       Estatísticas atualizadas até a 18ª rodada (31/05/2026)
     </p>
@@ -1268,7 +1592,7 @@
 function switchTab(e, id) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  e.target.classList.add('active');
+  e.currentTarget.classList.add('active');
   document.getElementById(id).classList.add('active');
 }
 
@@ -1276,12 +1600,12 @@ function switchTab(e, id) {
 Chart.defaults.font.family = "'IBM Plex Mono', monospace";
 Chart.defaults.color = '#7a7060';
 
-const azul   = '#0d2b6e';
-const azulM  = '#2952b3';
+const azul    = '#0d2b6e';
+const azulM   = '#2952b3';
 const dourado = '#c8a84b';
-const verm   = '#c0392b';
-const verde  = '#27ae60';
-const laranja = '#e67e22';
+const verm    = '#b83228';
+const verde   = '#1e8c50';
+const laranja = '#d4721a';
 
 // 1. Origem dos Gols Sofridos
 new Chart(document.getElementById('chartOrigem'), {
@@ -1290,7 +1614,7 @@ new Chart(document.getElementById('chartOrigem'), {
     labels: ['Bola aérea (9)', 'Fora da área (5)', 'Ligação direta (3)', 'Erro na saída (3)', 'Outros (9)'],
     datasets: [{
       data: [9, 5, 3, 3, 9],
-      backgroundColor: [verm, laranja, dourado, '#2952b3', '#95a5a6'],
+      backgroundColor: [verm, laranja, dourado, azulM, '#a09888'],
       borderWidth: 0,
       hoverOffset: 6
     }]
@@ -1300,12 +1624,8 @@ new Chart(document.getElementById('chartOrigem'), {
     maintainAspectRatio: false,
     cutout: '62%',
     plugins: {
-      legend: { position: 'bottom', labels: { padding: 14, font: { size: 10 } } },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` ${ctx.label}: ${ctx.raw} gols`
-        }
-      }
+      legend: { position: 'bottom', labels: { padding: 12, font: { size: 10 } } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} gols` } }
     }
   }
 });
@@ -1314,7 +1634,7 @@ new Chart(document.getElementById('chartOrigem'), {
 new Chart(document.getElementById('chartFalha'), {
   type: 'bar',
   data: {
-    labels: ['Lateral (Piton/PH/Cuiabano)', 'Zagueiro (Cuesta/Renan/Saldívia)', 'Goleiro (Léo Jardim)', 'Volante (Hugo Moura)'],
+    labels: ['Laterais (Piton/PH/Cuiabano)', 'Zagueiros (Cuesta/Renan/Saldívia)', 'Goleiro (Léo Jardim)', 'Volante (Hugo Moura)'],
     datasets: [{
       label: 'Gols',
       data: [6, 3, 2, 1],
@@ -1334,11 +1654,11 @@ new Chart(document.getElementById('chartFalha'), {
   }
 });
 
-// 3. Evolução de Gols Sofridos por Rodada
+// 3. Evolução Gols por Rodada
 new Chart(document.getElementById('chartEvolucao'), {
   type: 'bar',
   data: {
-    labels: ['R1\nMirassol','R2\nChape','R3\nBahia','R4\nSantos','R6\nPalmeiras','R7\nCruzeiro','R8\nFlu','R9\nGrêmio','R10\nCoritiba','R11\nBotafogo','R12\nRemo','R13\nSão Paulo','R14\nCorinthians','R15\nFlamengo','R15\nAthlético','R16\nInternacional','R17\nBragantino','R18\nAtl.-MG'],
+    labels: ['R1 Mira.','R2 Chape','R3 Bahia','R4 Santos','R6 Palm.','R7 Cruz.','R8 Flu','R9 Grêm.','R10 Cor.','R11 Bot.','R12 Remo','R13 SP','R14 Cor.','R15 Fla','R15 Ath.','R16 Inter','R17 Brag.','R18 Atl.'],
     datasets: [
       {
         label: 'Gols Sofridos',
@@ -1347,7 +1667,7 @@ new Chart(document.getElementById('chartEvolucao'), {
           const v = ctx.raw;
           if (v >= 3) return verm;
           if (v === 2) return laranja;
-          return '#c8a84b88';
+          return dourado + '88';
         },
         borderRadius: 2,
         yAxisID: 'y'
@@ -1370,63 +1690,38 @@ new Chart(document.getElementById('chartEvolucao'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top', labels: { font: { size: 10 }, padding: 12 } },
-      tooltip: {
-        callbacks: {
-          title: ctx => ctx[0].label.replace('\n', ' · ')
-        }
-      }
+      legend: { position: 'top', labels: { font: { size: 10 }, padding: 12 } }
     },
     scales: {
-      y: {
-        beginAtZero: true,
-        grid: { color: '#f0ece2' },
-        ticks: { stepSize: 1, font: { size: 10 } }
-      },
-      x: {
-        grid: { display: false },
-        ticks: { font: { size: 9 }, maxRotation: 0 }
-      }
+      y: { beginAtZero: true, grid: { color: '#f0ece2' }, ticks: { stepSize: 1, font: { size: 10 } } },
+      x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0 } }
     }
   }
 });
 
-// 4. Setor de Origem — barras horizontais (setor) + local de finalização + mecanismo
-// Setor (Esq/Dir/Centro) classifica de onde o ataque veio.
-// Mecanismo (Aérea/Jogo Aberto) classifica como o gol saiu.
+// 4. Setor de Origem
 new Chart(document.getElementById('chartSetor'), {
   type: 'bar',
   data: {
-    labels: ['Lado Direito (origem)', 'Lado Esquerdo (origem)', 'Centro (origem)', '─── Local finaliz. ───', 'Dentro da área', 'Fora da área', '─── Mecanismo ───', 'Bola Aérea (total)'],
+    labels: ['Lado Direito (origem)', 'Lado Esquerdo (origem)', 'Centro (origem)', '── Finalização ──', 'Dentro da área', 'Fora da área', '── Mecanismo ──', 'Bola Aérea (total)'],
     datasets: [{
       label: 'Gols sofridos',
       data: [13, 9, 7, null, 24, 5, null, 9],
       backgroundColor: [
-        verm, verm, 'rgba(192,57,43,0.7)',
+        verm, verm, 'rgba(184,50,40,0.6)',
         'rgba(0,0,0,0)',
         'rgba(26,60,140,0.7)', 'rgba(200,168,75,0.8)',
         'rgba(0,0,0,0)',
-        'rgba(192,57,43,0.65)'
+        'rgba(184,50,40,0.6)'
       ],
-      borderRadius: 3,
-      borderSkipped: false,
+      borderRadius: 2,
     }]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
     indexAxis: 'y',
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            if (ctx.label.includes('Mecanismo')) return '';
-            return `${ctx.parsed.x} gols`;
-          }
-        }
-      }
-    },
+    plugins: { legend: { display: false } },
     scales: {
       x: { beginAtZero: true, max: 15, grid: { color: '#f0ece2' }, ticks: { stepSize: 1, font: { size: 10 } } },
       y: { grid: { display: false }, ticks: { font: { size: 10 } } }
@@ -1461,7 +1756,7 @@ new Chart(document.getElementById('chartArtilheiros'), {
 new Chart(document.getElementById('chartPeriodo'), {
   type: 'doughnut',
   data: {
-    labels: ['1º Tempo (30%)', '2º Tempo (70%)'],
+    labels: ['1° Tempo (30%)', '2° Tempo (70%)'],
     datasets: [{
       data: [30, 70],
       backgroundColor: [azulM, dourado],
@@ -1473,63 +1768,43 @@ new Chart(document.getElementById('chartPeriodo'), {
     responsive: true,
     maintainAspectRatio: false,
     cutout: '55%',
-    plugins: {
-      legend: { position: 'bottom', labels: { font: {size:10}, padding: 12 } }
-    }
+    plugins: { legend: { position: 'bottom', labels: { font: {size:10}, padding: 12 } } }
   }
 });
 
-// ═══════════════════════════════════════════
-// CHARTS OFENSIVOS — Laboratório Ofensivo
-// ═══════════════════════════════════════════
-
-const rodadas = ['R1\nMirassol','R2\nChape','R3\nBahia','R4\nSantos','R5\nPalmeiras','R6\nCruzeiro','R7\nFlu','R8\nGrêmio','R9\nCoritiba','R10\nBotafogo','R11\nRemo','R12\nSão Paulo','R13\nCorinthians','R14\nFlamengo','R15\nAthlético','R16\nInter','R17\nBragantino','R18\nAtl.-MG'];
-const xgData  = [0.61,4.81,1.71,1.36,1.50,1.37,1.84,1.60,0.51,1.20,1.33,2.18,1.02,1.67,2.11,0.58,1.22,0.27];
-const golsData= [1,1,0,1,2,3,3,2,1,1,1,2,0,2,1,1,0,0];
-const finData = [13,30,26,16,17,15,16,10,11,15,19,20,21,20,16,14,14,26];
-const posseData=[46,67,62,60,53,41,52,37,35,51,57,38,60,51,53,60,60,60];
-const gcData  = [1,9,2,2,2,3,2,4,0,1,1,2,2,2,2,0,2,3];
+// ═══ LABORATÓRIO OFENSIVO ═══
+const rodadas = ['R1 Mira.','R2 Chape','R3 Bahia','R4 Santos','R5 Palm.','R6 Cruz.','R7 Flu','R8 Grêm.','R9 Cor.','R10 Bot.','R11 Remo','R12 SP','R13 Cor.','R14 Fla','R15 Ath.','R16 Inter','R17 Brag.','R18 Atl.'];
+const xgData   = [0.61,4.81,1.71,1.36,1.50,1.37,1.84,1.60,0.51,1.20,1.33,2.18,1.02,1.67,2.11,0.58,1.22,0.27];
+const golsData = [1,1,0,1,2,3,3,2,1,1,1,2,0,2,1,1,0,0];
+const finData  = [13,30,26,16,17,15,16,10,11,15,19,20,21,20,16,14,14,26];
+const posseData= [46,67,62,60,53,41,52,37,35,51,57,38,60,51,53,60,60,60];
 
 const resultCores = [
-  '#c0392b','#f39c12','#c0392b','#c0392b','#27ae60',
-  '#f39c12','#27ae60','#27ae60','#f39c12','#c0392b',
-  '#f39c12','#27ae60','#c0392b','#f39c12','#27ae60','#c0392b','#c0392b','#c0392b'
+  '#b83228','#f39c12','#b83228','#b83228','#1e8c50',
+  '#f39c12','#1e8c50','#1e8c50','#f39c12','#b83228',
+  '#f39c12','#1e8c50','#b83228','#f39c12','#1e8c50','#b83228','#b83228','#b83228'
 ];
 
-// 5. xG vs Gols por Jogo (barras agrupadas)
+// xG vs Gols
 new Chart(document.getElementById('chartXG'), {
   type: 'bar',
   data: {
     labels: rodadas,
     datasets: [
-      {
-        label: 'xG esperado',
-        data: xgData,
-        backgroundColor: 'rgba(13,43,110,0.75)',
-        borderRadius: 3,
-      },
-      {
-        label: 'Gols marcados',
-        data: golsData,
-        backgroundColor: 'rgba(200,168,75,0.9)',
-        borderRadius: 3,
-      }
+      { label: 'xG esperado', data: xgData, backgroundColor: 'rgba(13,43,110,0.72)', borderRadius: 2 },
+      { label: 'Gols marcados', data: golsData, backgroundColor: 'rgba(200,168,75,0.88)', borderRadius: 2 }
     ]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
-    responsive: true,
-    maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top', labels: { font: { size: 11 } } },
+      legend: { position: 'top', labels: { font: { size: 10 } } },
       tooltip: {
         callbacks: {
           afterLabel: function(ctx) {
             if(ctx.datasetIndex === 1) {
-              const xg = xgData[ctx.dataIndex];
-              const g  = golsData[ctx.dataIndex];
-              const diff = (g - xg).toFixed(2);
+              const diff = (golsData[ctx.dataIndex] - xgData[ctx.dataIndex]).toFixed(2);
               return diff > 0 ? `↑ Overperformance (+${diff} vs xG)` : `↓ Subperformance (${diff} vs xG)`;
             }
           }
@@ -1538,18 +1813,13 @@ new Chart(document.getElementById('chartXG'), {
     },
     scales: {
       x: { ticks: { font: { size: 9 } } },
-      y: { beginAtZero: true, max: 6, title: { display: true, text: 'Valor' } }
+      y: { beginAtZero: true, max: 6 }
     }
   }
 });
 
-// 6. Finalizações × Gols (scatter)
-const scatterData = rodadas.map((r,i) => ({
-  x: finData[i],
-  y: golsData[i],
-  label: r.replace('\n',' ')
-}));
-
+// Scatter Finalizações × Gols
+const scatterData = rodadas.map((r,i) => ({ x: finData[i], y: golsData[i], label: r }));
 new Chart(document.getElementById('chartFinEfic'), {
   type: 'scatter',
   data: {
@@ -1558,13 +1828,11 @@ new Chart(document.getElementById('chartFinEfic'), {
       data: scatterData.map(d => ({ x: d.x, y: d.y })),
       backgroundColor: resultCores.map(c => c + 'cc'),
       borderColor: resultCores,
-      pointRadius: 9,
-      pointHoverRadius: 12,
+      pointRadius: 8,
+      pointHoverRadius: 11,
     }]
   },
   options: {
-    responsive: true,
-    maintainAspectRatio: false,
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -1572,43 +1840,38 @@ new Chart(document.getElementById('chartFinEfic'), {
       tooltip: {
         callbacks: {
           label: function(ctx) {
-            const i = ctx.dataIndex;
-            return `${scatterData[i].label}: ${ctx.parsed.x} chutes, ${ctx.parsed.y} gols`;
+            return `${scatterData[ctx.dataIndex].label}: ${ctx.parsed.x} chutes, ${ctx.parsed.y} gols`;
           }
         }
       }
     },
     scales: {
       x: { title: { display: true, text: 'Finalizações' }, min: 8, max: 32 },
-      y: { title: { display: true, text: 'Gols marcados' }, min: -0.2, max: 3.5, ticks: { stepSize: 1 } }
+      y: { title: { display: true, text: 'Gols' }, min: -0.2, max: 3.5, ticks: { stepSize: 1 } }
     }
   }
 });
 
-// 7. Posse de bola — linha com pontos coloridos por resultado
+// Posse
 new Chart(document.getElementById('chartPosse'), {
   type: 'line',
   data: {
     labels: rodadas,
-    datasets: [
-      {
-        label: 'Posse (%)',
-        data: posseData,
-        borderColor: azul,
-        backgroundColor: 'rgba(13,43,110,0.08)',
-        borderWidth: 2.5,
-        tension: 0.35,
-        fill: true,
-        pointRadius: 8,
-        pointBackgroundColor: resultCores,
-        pointBorderColor: '#fff',
-        pointBorderWidth: 2,
-      }
-    ]
+    datasets: [{
+      label: 'Posse (%)',
+      data: posseData,
+      borderColor: azul,
+      backgroundColor: 'rgba(13,43,110,0.07)',
+      borderWidth: 2.5,
+      tension: 0.35,
+      fill: true,
+      pointRadius: 8,
+      pointBackgroundColor: resultCores,
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+    }]
   },
   options: {
-    responsive: true,
-    maintainAspectRatio: false,
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -1616,7 +1879,7 @@ new Chart(document.getElementById('chartPosse'), {
       tooltip: {
         callbacks: {
           label: function(ctx) {
-            const cores = { '#27ae60': 'Vitória', '#f39c12': 'Empate', '#c0392b': 'Derrota' };
+            const cores = { '#1e8c50': 'Vitória', '#f39c12': 'Empate', '#b83228': 'Derrota' };
             return `Posse: ${ctx.parsed.y}% — ${cores[resultCores[ctx.dataIndex]] || ''}`;
           }
         }
@@ -1629,82 +1892,96 @@ new Chart(document.getElementById('chartPosse'), {
   }
 });
 
-// 8. Radar: Vitórias × Empates × Derrotas
-// Normalizar para escala 0–10:
-// xG: ÷2 × 10 = max 10 | Fin: ÷20 × 10 | GC: ÷4 × 10 | Gols: ÷3 × 10 | Escanteios: ÷14 × 10
-const radarV = [
-  (1.846/2)*10,  // xG médio
-  (15.8/20)*10,  // Finalizações
-  (2.40/4)*10,   // Grandes chances
-  (2.00/3)*10,   // Gols
-  (4.80/14)*10   // Escanteios
-];
-const radarE = [
-  (1.938/2)*10,
-  (19.0/20)*10,
-  (3.00/4)*10,
-  (1.60/3)*10,
-  (8.80/14)*10
-];
-const radarD = [
-  (1.083/2)*10,
-  (17.3/20)*10,
-  (1.50/4)*10,
-  (0.50/3)*10,
-  (5.33/14)*10
-];
+// Radar
+const radarV = [(1.846/2)*10,(15.8/20)*10,(2.40/4)*10,(2.00/3)*10,(4.80/14)*10];
+const radarE = [(1.938/2)*10,(19.0/20)*10,(3.00/4)*10,(1.60/3)*10,(8.80/14)*10];
+const radarD = [(1.083/2)*10,(17.3/20)*10,(1.50/4)*10,(0.50/3)*10,(5.33/14)*10];
 
 new Chart(document.getElementById('chartRadarResultado'), {
   type: 'radar',
   data: {
     labels: ['xG Médio', 'Finalizações', 'Grandes Chances', 'Gols Marcados', 'Escanteios'],
     datasets: [
-      {
-        label: 'Vitórias (5 jogos)',
-        data: radarV,
-        backgroundColor: 'rgba(39,174,96,0.15)',
-        borderColor: '#27ae60',
-        borderWidth: 2,
-        pointBackgroundColor: '#27ae60',
-      },
-      {
-        label: 'Empates (5 jogos)',
-        data: radarE,
-        backgroundColor: 'rgba(243,156,18,0.15)',
-        borderColor: '#f39c12',
-        borderWidth: 2,
-        pointBackgroundColor: '#f39c12',
-      },
-      {
-        label: 'Derrotas (8 jogos)',
-        data: radarD,
-        backgroundColor: 'rgba(192,57,43,0.15)',
-        borderColor: '#c0392b',
-        borderWidth: 2,
-        pointBackgroundColor: '#c0392b',
-      }
+      { label: 'Vitórias (5)', data: radarV, backgroundColor: 'rgba(30,140,80,0.12)', borderColor: '#1e8c50', borderWidth: 2, pointBackgroundColor: '#1e8c50' },
+      { label: 'Empates (5)', data: radarE, backgroundColor: 'rgba(212,114,26,0.12)', borderColor: '#d4721a', borderWidth: 2, pointBackgroundColor: '#d4721a' },
+      { label: 'Derrotas (8)', data: radarD, backgroundColor: 'rgba(184,50,40,0.12)', borderColor: '#b83228', borderWidth: 2, pointBackgroundColor: '#b83228' }
     ]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { position: 'bottom', labels: { font: { size: 12 } } }
-    },
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } },
     scales: {
       r: {
         beginAtZero: true,
         max: 10,
         ticks: { display: false },
-        grid: { color: 'rgba(0,0,0,0.08)' },
-        pointLabels: { font: { size: 12, weight: '600' } }
+        grid: { color: 'rgba(0,0,0,0.07)' },
+        pointLabels: { font: { size: 11, weight: '600' } }
       }
     }
   }
 });
 
+// ── NAV FIXO: mostrar após passar o header ──
+(function() {
+  const nav = document.getElementById('sumario-nav');
+  const progress = document.getElementById('leitura-progress');
+  const header = document.querySelector('.header');
+  const sections = [
+    { id: 'panorama' }, { id: 'analise' }, { id: 'defesa' },
+    { id: 'heatmap' }, { id: 'tribunal' }, { id: 'cronologia' },
+    { id: 'ataque' }, { id: 'tatico' }, { id: 'laboratorio' },
+    { id: 'padroes' }, { id: 'conclusao' }
+  ];
+  const links = document.querySelectorAll('.nav-link');
+
+  function onScroll() {
+    const scrollY = window.scrollY;
+    const headerH = header ? header.offsetHeight : 200;
+
+    // mostrar/ocultar nav
+    if (scrollY > headerH - 60) {
+      nav.classList.add('visible');
+    } else {
+      nav.classList.remove('visible');
+    }
+
+    // barra de progresso
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docH > 0 ? (scrollY / docH) * 100 : 0;
+    progress.style.width = pct + '%';
+
+    // destacar seção ativa
+    let ativo = null;
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const el = document.getElementById(sections[i].id);
+      if (el && el.getBoundingClientRect().top <= 80) {
+        ativo = sections[i].id;
+        break;
+      }
+    }
+    links.forEach(l => {
+      l.classList.toggle('ativo', l.getAttribute('href') === '#' + ativo);
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // scroll suave com offset para compensar a altura do nav
+  links.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').slice(1);
+      const el = document.getElementById(targetId);
+      if (el) {
+        const navH = nav.offsetHeight;
+        const top = el.getBoundingClientRect().top + window.scrollY - navH - 8;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>
