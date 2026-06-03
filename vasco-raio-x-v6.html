@@ -274,6 +274,17 @@
                           pointer-events: none; opacity: 0; transition: opacity 0.15s;
                           z-index: 10; }
   .heatspot:hover .tooltip { opacity: 1; }
+  .player-dot           { position: absolute; width: 26px; height: 26px; border-radius: 50%;
+                          background: rgba(255,255,255,0.88); color: #0a2a14;
+                          font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+                          display: flex; align-items: center; justify-content: center;
+                          transform: translate(-50%, -50%); z-index: 3; cursor: default;
+                          border: 1.5px solid rgba(255,255,255,0.6);
+                          box-shadow: 0 0 6px rgba(0,0,0,0.5); }
+  .player-dot:hover::after { content: attr(title); position: absolute; bottom: calc(100% + 6px);
+                          left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.88);
+                          color: #fff; font-size: 9px; padding: 4px 7px; border-radius: 3px;
+                          white-space: nowrap; z-index: 20; pointer-events: none; }
 
 @media (max-width: 1023px) {
   .container { padding: 0 20px; }
@@ -428,7 +439,7 @@
   <div class="header-inner animate">
     <div class="header-kicker">Especial · Brasileirão Série A 2026</div>
     <h1 class="header-title">Raio-<span>X</span><br>do Vasco</h1>
-    <p class="header-subtitle">Um time que reagiu durante parte da campanha, mas chegou à parada em colapso: três derrotas seguidas, oito gols sofridos, um marcado e uma defesa novamente exposta. A análise completa de 18 rodadas de contradições cruzadas.</p>
+    <p class="header-subtitle">O Vasco reagiu. Virou clássico no Maracanã, bateu o líder na estreia de Renato, fez a torcida acreditar de novo. Mas a parada chegou com três derrotas seguidas, oito gols sofridos, um marcado — e uma defesa que insiste em trair a fé de São Januário. 18 rodadas, 29 gols sofridos e um diagnóstico que não dá para adiar.</p>
     <div class="header-meta">ATUALIZADO EM 31 DE MAIO DE 2026 · EDIÇÃO ESPECIAL · INCRÍVEL FUTEBOL</div>
   </div>
   <div class="header-bg-number">26</div>
@@ -458,18 +469,18 @@
     <div class="section-kicker">Análise da temporada</div>
     <h2 class="section-title">O Time Que Não Para de Se Autossabotar</h2>
     <p class="section-lead">
-      Começou no pior jeito possível. Três derrotas e um empate nas primeiras quatro rodadas, lanterna do Brasileirão e a pressão de uma torcida com memória longa. Mas a chegada de Renato Gaúcho no banco mudou o rumo da história — pelo menos no campo ofensivo. No setor defensivo, os fantasmas continuam de plantão em São Januário.
+      Começou no pior jeito possível. Lanterna do Brasileirão, três derrotas nas primeiras quatro rodadas, São Januário em silêncio constrangido e a imprensa já decretando a queda. Quem é vascaíno conhece essa sensação no estômago — aquela mistura de raiva e amor que só quem torce pra esse clube sabe o que é. Depois veio Renato Gaúcho, e com ele a esperança voltou a respirar. Mas o futebol não é novela — o vilão voltou.
     </p>
     <p style="font-size: 15.5px; color: #444; line-height: 1.75; max-width: 760px;">
-      A campanha do Vasco na Série A 2026 é uma reportagem sobre contradições. O mesmo time que virou o clássico no Maracanã saindo perdendo por 2 a 0 contra o Fluminense é o mesmo que levou 4 a 1 do Internacional. O mesmo que bateu o Palmeiras na estreia de Renato Gaúcho também perdeu de 3 a 0 para o Bragantino em casa. Não existe linha clara nessa equipe: o que existe é um bom aproveitamento ofensivo mais baseado em intuição do que organização e um problema estrutural defensivo que nenhum treinador ainda resolveu.
+      A campanha do Vasco na Série A 2026 é uma história de duas almas dentro do mesmo uniforme. A mesma equipe que entrou no Maracanã perdendo de 2 a 0 para o Fluminense e saiu de lá com 3 a 2 — arrancando gritos de quem estava no estádio e em casa — é a mesma que levou 4 a 1 do Internacional e apanhou de 3 a 0 do Bragantino dentro de São Januário. Não existe coerência nessa equipe. Existe garra em alguns dias, colapso em outros — e uma defesa que parece decidida a correr mais risco do que o coração do torcedor aguenta.
     </p>
 
     <div class="pull-quote">
-      "O Vasco não perde apenas para os adversários. Muitas vezes, perde para os próprios erros."
+      "O Vasco não perde apenas para os adversários. Muitas vezes, perde para os próprios erros — e o pior é que a torcida já sabe onde vai doer antes de doer."
     </div>
 
     <p style="font-size: 15.5px; color: #444; line-height: 1.75; max-width: 760px;">
-      Levantamos jogo a jogo as <span class="stat-inline">29</span> bolas que entraram no gol de Léo Jardim nas 18 rodadas, identificamos os padrões de origem, os setores do campo mais vulneráveis e os jogadores mais envolvidos nas falhas. O resultado é um mapa de uma defesa que, se não aprender a se organizar, vai continuar pagando o pato pelos erros de quem deveria protegê-la.
+      Levantamos jogo a jogo as <span class="stat-inline">29</span> bolas que entraram no gol de Léo Jardim nas 18 rodadas. Identificamos de onde vieram, quem estava lá quando a bola passou, quais padrões se repetem e quais erros custaram pontos que poderiam ter mudado a cara da classificação. O resultado é um mapa de uma defesa que tem qualidade, mas que insiste em se trair nas horas que mais importam.
     </p>
   </div>
 </div>
@@ -480,7 +491,7 @@
     <div class="section-kicker">Estatísticas defensivas</div>
     <h2 class="section-title">Os 29 Gols que Machucaram</h2>
     <p class="section-lead">
-      Dos 29 gols sofridos no Brasileirão, pelo menos <strong>12 têm origem direta em falha individual identificável</strong>. Abaixo, a radiografia completa por tipo de origem, zona do campo e mecanismo de gol.
+      Vinte e nove vezes a bola entrou no gol de Léo Jardim. Vinte e nove momentos em que o silêncio caiu em São Januário — ou o adversário explodiu no Beira-Rio, no Maracanã, na Vila Belmiro. Não é um número abstrato. É dor acumulada, ponto perdido, noite mal dormida. E o que machuca mais: pelo menos <strong>12 desses gols nasceram de erros que não precisavam ter acontecido.</strong>
     </p>
 
     <div class="two-col">
@@ -526,13 +537,13 @@
       </div>
       <div style="padding-top: 8px;">
         <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:16px;">
-          A <strong>bola aérea</strong> é a maior vilã da temporada. Dos 29 gols sofridos, ao menos <strong class="stat-inline">9</strong> nasceram de ações pelo alto — cruzamentos, cabeceios e levantamentos em jogo aberto.
+          Tem um lado do campo que virou porta de entrada do pesadelo vascaíno. O <strong>lado direito da defesa</strong> — o corredor por onde tantas jogadas começam, por onde os laterais sobem cheios de vontade e voltam tarde demais — foi por onde vieram <strong class="stat-inline">13</strong> dos 29 gols sofridos. Quase metade. É muita coisa para um único setor aguentar.
         </p>
         <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:16px;">
-          Por <strong>setor de origem do ataque</strong>, o <strong>lado direito da defesa</strong> é o mais vazado: <strong class="stat-inline">13</strong> gols — praticamente metade de todos os gols. O lado esquerdo (zona de Piton) contabiliza 9. O centro registra 7. E mais: <strong>24 dos 29 gols foram finalizados dentro da área</strong>, revelando colapso na proteção da zona mais crítica do campo.
+          O lado esquerdo, zona de responsabilidade de Piton, acumula 9. O centro registra 7. E o dado que talvez mais assuste: <strong>24 dos 29 gols foram finalizados dentro da área</strong> — dentro do espaço que deveria ser sagrado, inviolável. O adversário chegou lá com frequência demais, e chegou com espaço demais.
         </p>
         <p style="font-size:15px; line-height:1.7; color:#444;">
-          Os <strong>5 gols de fora da área</strong> revelam deficiência na pressão ao portador da bola — um problema de organização estrutural, não apenas marcação individual.
+          Os <strong>5 gols de fora da área</strong> contam outra história: a de um time que às vezes nem chega perto do portador da bola antes do chute. Não é falta de talento — é falta de organização. E organização se treina, se corrige, se cobra.
         </p>
 
         <div style="margin-top:24px;">
@@ -595,46 +606,96 @@
         <!-- Campo SVG com heatspots -->
         <div class="heatmap-pitch">
 
-          <!-- Linhas do campo -->
+          <!-- ── LINHAS DO CAMPO ── -->
+          <!-- Linha do meio campo -->
           <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,0.25);"></div>
+          <!-- Linha central vertical -->
           <div style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,0.25);"></div>
-          <div style="position:absolute;top:0;left:20%;right:20%;height:18%;border:1px solid rgba(255,255,255,0.25);border-top:none;"></div>
-          <div style="position:absolute;bottom:0;left:20%;right:20%;height:18%;border:1px solid rgba(255,255,255,0.25);border-bottom:none;"></div>
+          <!-- Grande área INFERIOR (defesa do Vasco) -->
+          <div style="position:absolute;bottom:0;left:20%;right:20%;height:20%;border:1px solid rgba(255,255,255,0.3);border-bottom:none;"></div>
+          <!-- Pequena área INFERIOR -->
+          <div style="position:absolute;bottom:0;left:33%;right:33%;height:10%;border:1px solid rgba(255,255,255,0.2);border-bottom:none;"></div>
+          <!-- Grande área SUPERIOR (defesa adversária) -->
+          <div style="position:absolute;top:0;left:20%;right:20%;height:20%;border:1px solid rgba(255,255,255,0.15);border-top:none;"></div>
+          <!-- Círculo central -->
           <div style="position:absolute;top:50%;left:50%;width:20%;aspect-ratio:1;border:1px solid rgba(255,255,255,0.25);border-radius:50%;transform:translate(-50%,-50%);"></div>
+          <!-- Gol inferior (Vasco) -->
+          <div style="position:absolute;bottom:0;left:42%;right:42%;height:3%;border:2px solid rgba(255,255,255,0.5);border-bottom:none;"></div>
 
-          <!-- CORREDOR DIREITO DA DEFESA — left=18% (lado esquerdo da tela = lado direito do defensor) -->
-          <div class="heatspot" style="left:18%;top:22%;width:76px;height:76px;font-size:14px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,1),rgba(192,57,43,0.3));">
+          <!-- ══════════════════════════════════
+               BALÕES DE GOLS (todos 56×56, igual ao "5")
+          ══════════════════════════════════ -->
+
+          <!-- 13 — lado direito da defesa (esquerda da tela) -->
+          <div class="heatspot" style="left:18%;top:22%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,1),rgba(192,57,43,0.3));">
             13
             <div class="tooltip">Lado direito da defesa · setor mais vazado · 13 gols sofridos</div>
           </div>
 
-          <!-- CORREDOR ESQUERDO DA DEFESA — left=82% (lado direito da tela = lado esquerdo do defensor = zona de Piton) -->
-          <div class="heatspot" style="left:82%;top:22%;width:68px;height:68px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.9),rgba(192,57,43,0.25));">
+          <!-- 9 — lado esquerdo da defesa (direita da tela, zona Piton) -->
+          <div class="heatspot" style="left:82%;top:22%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.9),rgba(192,57,43,0.25));">
             9
             <div class="tooltip">Lado esquerdo da defesa (Piton) · 9 gols sofridos</div>
           </div>
 
-          <!-- CENTRO DA ÁREA -->
-          <div class="heatspot" style="left:50%;top:16%;width:62px;height:62px;font-size:12px;background:radial-gradient(circle,rgba(192,57,43,0.85),rgba(192,57,43,0.2));">
+          <!-- 7 — centro da área -->
+          <div class="heatspot" style="left:50%;top:16%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(192,57,43,0.85),rgba(192,57,43,0.2));">
             7
             <div class="tooltip">Centro da área · ligações diretas e rebotes · 7 gols</div>
           </div>
 
-          <!-- FORA DA ÁREA — balão amarelo, posicionado onde estava o azul -->
-          <div class="heatspot" style="left:50%;top:28%;width:56px;height:56px;font-size:12px;font-weight:700;background:radial-gradient(circle,rgba(200,168,75,0.90),rgba(200,168,75,0.25));">
+          <!-- 5 — fora da área -->
+          <div class="heatspot" style="left:50%;top:30%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(200,168,75,0.90),rgba(200,168,75,0.25));">
             5
             <div class="tooltip">Fora da área · chutes de média e longa distância · 5 gols</div>
           </div>
 
-          <!-- DENTRO DA ÁREA — balão azul, dentro da grande área -->
-          <div class="heatspot" style="left:50%;top:6%;width:70px;height:70px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(13,43,110,0.90),rgba(13,43,110,0.3));">
+          <!-- 24 — dentro da área (azul) -->
+          <div class="heatspot" style="left:50%;top:6%;width:56px;height:56px;font-size:13px;font-weight:700;background:radial-gradient(circle,rgba(13,43,110,0.90),rgba(13,43,110,0.3));">
             24
             <div class="tooltip">Dentro da área · 24 dos 29 gols foram finalizados aqui</div>
           </div>
 
+          <!-- ══════════════════════════════════
+               11 JOGADORES — formação 4-4-2
+               Perspectiva do adversário:
+               GK na parte INFERIOR, ataque na SUPERIOR
+
+               1  Léo Jardim (GK)
+               2  PH / Puma (LD)
+               3  Cuesta / Saldívia (ZD)
+               4  R. Renan (ZE)
+               5  Piton / Cuiabano (LE)
+               6  Barros (MC)
+               7  Thiago Mendes (MC)
+               8  Rojas (MD)
+               9  Adson (ME)
+               10 Spinelli (MEI)
+               11 Andrés Gómez (MEI / CA)
+          ══════════════════════════════════ -->
+
+          <!-- 1 — Léo Jardim (GK) -->
+          <div class="player-dot" style="left:50%;top:94%;" title="1 · Léo Jardim (GK)">1</div>
+
+          <!-- Linha defensiva -->
+          <div class="player-dot" style="left:82%;top:82%;" title="2 · PH / Puma (Lateral-direito)">2</div>
+          <div class="player-dot" style="left:64%;top:80%;" title="3 · Cuesta / Saldívia (Zagueiro)">3</div>
+          <div class="player-dot" style="left:36%;top:80%;" title="4 · Robert Renan (Zagueiro)">4</div>
+          <div class="player-dot" style="left:38%;top:60%;" title="5 · Barros (Volante)">5</div>
+
+          <!-- Meio-campo -->
+          <div class="player-dot" style="left:18%;top:82%;" title="6 · Piton / Puma (Lateral-esquerdo)">6</div>
+          <div class="player-dot" style="left:82%;top:62%;" title="7 · Adson (Meia)">7</div>
+          <div class="player-dot" style="left:62%;top:60%;" title="8 · Thiago Mendes (Volante)">8</div>
+          <div class="player-dot" style="left:62%;top:44%;" title="9 · Spinelli (Meia-atacante)">9</div>
+
+          <!-- Ataque -->
+          <div class="player-dot" style="left:38%;top:44%;" title="10 · Rojas (Meia-atacante)">10</div>
+          <div class="player-dot" style="left:18%;top:62%;" title="11 · Andrés Gómez (Meia-atacante)">11</div>
+
           <!-- Nota de total -->
           <div style="position:absolute;bottom:-30px;right:0;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(200,168,75,0.7);letter-spacing:1px;">TOTAL: 29 GOLS</div>
-          <div style="position:absolute;bottom:-54px;left:0;right:0;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <div style="position:absolute;bottom:-66px;left:0;right:0;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
             <div style="display:flex;align-items:center;gap:6px;">
               <div style="width:12px;height:12px;border-radius:50%;background:rgba(192,57,43,0.9);"></div>
               <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:1px;">SETOR ENTRADA</span>
@@ -647,11 +708,15 @@
               <div style="width:12px;height:12px;border-radius:50%;background:rgba(200,168,75,0.85);"></div>
               <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:1px;">FORA DA ÁREA</span>
             </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.85);"></div>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--cinza-medio);letter-spacing:1px;">JOGADORES</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:60px;"></div>
+      <div style="margin-top:80px;"></div>
 
     </div>
   </div>
@@ -663,7 +728,7 @@
     <div class="section-kicker">Responsabilidade individual</div>
     <h2 class="section-title">O Tribunal Defensivo</h2>
     <p class="section-lead">
-      Erros individuais custaram ao menos 12 gols ao Vasco no Brasileirão — em 29 sofridos, quase metade teve contribuição direta de falha humana identificável. Os <strong>laterais concentram 6 desses erros</strong> (Piton 3, PH 2, Cuiabano 1), superando todos os outros setores. Estes são os jogadores com maior envolvimento nas falhas identificadas jogo a jogo.
+      Futebol não é só coletivo. Tem momentos em que uma decisão errada de um jogador muda o resultado de um jogo — e muda também o humor de uma cidade inteira. No Vasco de 2026, isso aconteceu com uma frequência que machuca. Pelo menos <strong>12 dos 29 gols sofridos</strong> têm um nome por trás: alguém que errou em hora errada, no lugar errado, do jeito errado. Os <strong>laterais concentram 6 desses erros</strong> — Piton com 3, PH com 2, Cuiabano com 1. Esses são os jogadores que precisam olhar o espelho antes do returno.
     </p>
 
     <div class="players-grid">
@@ -893,7 +958,7 @@
     <div class="section-kicker">O lado bom</div>
     <h2 class="section-title">Onde o Vasco Brilha</h2>
     <p class="section-lead">
-      Com <span class="stat-inline">22</span> gols marcados em 18 jogos, o Vasco não é um time estéril ofensivamente. Pelo contrário: é um time que reage, que vira placares, que explora bem as laterais e que ganhou volume ofensivo com Renato Gaúcho.
+      Antes de qualquer coisa: esse time ataca. Ataca com vontade, ataca com volume, ataca com aquela raça que faz a torcida se levantar. São <span class="stat-inline">22</span> gols marcados em 18 jogos — e o número não conta tudo. Não conta a virada em 12 minutos no Maracanã. Não conta o gol de Thiago Mendes para fechar o Athletico. Não conta o pênalti de Puma que acendeu São Januário antes da virada sobre o São Paulo. Tem alma nesses gols. O problema é que a defesa às vezes apaga o que o ataque acende.
     </p>
 
     <div class="two-col">
@@ -915,7 +980,7 @@
 
         <div style="margin-top:20px; padding: 20px; background:#f9f7f2; border:1px solid #e4dfd5;">
           <p style="font-size:14px; line-height:1.65; color:#444;">
-            📊 <strong>70% dos gols do Vasco saem no 2º tempo</strong> — inversão em relação a 2025 (quando 65% eram no 1º tempo). Isso indica preparo físico e pressão ofensiva crescente, mas também que o time começa os jogos em baixa rotação.
+            📊 <strong>70% dos gols do Vasco saem no 2º tempo.</strong> Isso é mais do que estatística — é personalidade. É o time que respira fundo, sente o jogo e acorda quando o adversário já está comemorando. Tem coisa mais vascaína do que isso?
           </p>
         </div>
       </div>
@@ -937,27 +1002,27 @@
 
     <div class="vd-item">
       <div class="vd-icon">⚡</div>
-      <div class="vd-text"><strong>Reação emocional</strong>Virou o Fluminense perdendo 2×0, empatou o clássico com o Fla, venceu o Grêmio mesmo sendo ameaçado. É um time que não desiste.</div>
+      <div class="vd-text"><strong>Reação emocional</strong>Esse time não morre. Saiu perdendo de 2 a 0 no Maracanã e virou. Empatou o clássico com o Fla nos acréscimos. Não é sorte — é caráter. E caráter, no futebol brasileiro, vale ponto.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🎯</div>
-      <div class="vd-text"><strong>Jogo pelos lados</strong>Puma Rodríguez e Cuiabano são peças ofensivas importantes. O Vasco cria muito a partir dos corredores.</div>
+      <div class="vd-text"><strong>Jogo pelos lados</strong>Puma e os laterais ofensivos são uma das principais armas do Vasco. O time explora bem os corredores, cria largura, abre espaço. Quando a transição funciona, é bonito de ver.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🧠</div>
-      <div class="vd-text"><strong>Andrés Gómez nas entrelinhas</strong>O meio-campo cresceu com Renato. Andrés articula, combina e chega à área com regularidade e qualidade.</div>
+      <div class="vd-text"><strong>Andrés Gómez nas entrelinhas</strong>Cresceu com Renato. Articula, combina, chega à área sem avisar. É o tipo de jogador que aparece quando o time mais precisa — e isso tem um valor que o xG não mede.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🏋️</div>
-      <div class="vd-text"><strong>Preparo físico no 2º tempo</strong>70% dos gols marcados no segundo tempo — o time pressiona quando o adversário sente o cansaço.</div>
+      <div class="vd-text"><strong>Preparo físico no 2º tempo</strong>70% dos gols marcados saem no segundo tempo. O Vasco cresce quando o adversário cansa. É um time que joga os 90 minutos — e às vezes os últimos 20 são os melhores.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">⚽</div>
-      <div class="vd-text"><strong>Eficiência ofensiva em bola aérea</strong>Thiago Mendes é uma arma nas infiltrações e chegada na área. Vários gols em escanteios e cruzamentos confirmam eficiência nas jogadas pelo alto no ataque.</div>
+      <div class="vd-text"><strong>Eficiência ofensiva em bola aérea</strong>Thiago Mendes chega bem na área. Escanteios e cruzamentos resultaram em gols importantes ao longo da temporada. O que o adversário faz no alto contra o Vasco, o Vasco também sabe fazer.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">📈</div>
-      <div class="vd-text"><strong>Evolução com Renato</strong>De 8,3% de aproveitamento nas primeiras quatro rodadas para 37% após 18 rodadas. A melhora foi real.</div>
+      <div class="vd-text"><strong>Evolução com Renato</strong>De 8,3% de aproveitamento nas primeiras quatro rodadas para 37% após 18 rodadas. Não foi milagre — foi trabalho, foi crença, foi um time que encontrou um jeito de jogar e começou a acreditar nele.</div>
     </div>
   </div>
   <div class="vd-col defeitos">
@@ -965,27 +1030,27 @@
 
     <div class="vd-item">
       <div class="vd-icon">🔴</div>
-      <div class="vd-text"><strong>Erros individuais crônicos</strong>12 dos 29 gols sofridos têm origem em falha direta identificável. Piton (3), Léo Jardim e PH (2 cada) são os mais envolvidos — com os laterais liderando o ranking de erros.</div>
+      <div class="vd-text"><strong>Erros individuais crônicos</strong>12 dos 29 gols sofridos têm um nome por trás. Piton errou três vezes. Léo Jardim e PH duas cada. São falhas que a estatística registra frio — mas que a torcida sente quente, na hora em que acontece, na hora em que o placar muda.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🔴</div>
-      <div class="vd-text"><strong>Vulnerabilidade na bola aérea</strong>: 9 gols sofridos em ações pelo alto — cruzamentos e cabeceios em jogo aberto. E <strong>24 dos 29 gols foram finalizados dentro da área</strong> — colapso total na proteção da zona mais crítica.</div>
+      <div class="vd-text"><strong>Vulnerabilidade na bola aérea</strong>9 gols sofridos pelo alto. Cruzamentos que viram cabeceios livres, escanteios sem marcação no segundo poste. E 24 dos 29 gols saíram de dentro da área — o espaço que deveria ser o mais protegido do campo.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🔴</div>
-      <div class="vd-text"><strong>Saídas de bola erradas</strong>3 gols nasceram de erro direto na saída de bola — Léo Jardim (Inter), Piton (Mirassol) e Saldívia (Bragantino). A equipe é punida quando tenta construir desde trás sem proteção adequada.</div>
+      <div class="vd-text"><strong>Saídas de bola erradas</strong>3 gols nasceram de erro na saída — Léo Jardim no Inter, Piton no Mirassol, Saldívia no Bragantino. Jogar desde trás exige concentração e cobertura. Quando falta um dos dois, o adversário agradece.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🟡</div>
-      <div class="vd-text"><strong>Costas abertas em contra-ataques</strong>O lado direito concentra 13 gols sofridos — praticamente metade do total. Quando os laterais sobem e perdem a bola, o corredor fica exposto. O Inter fez 4 gols aproveitando isso em um único jogo.</div>
+      <div class="vd-text"><strong>Corredor direito: a ferida aberta</strong>13 gols sofridos pelo lado direito da defesa. Quase metade de tudo. Quando o lateral sobe e perde a bola, não tem quem cubra. O Inter aproveitou isso quatro vezes em um único jogo — e foi o suficiente para acabar com a noite.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🟡</div>
-      <div class="vd-text"><strong>Falta de criatividade com um a mais</strong>Contra o Corinthians com 11×10 o tempo todo, praticamente não criou. Faltou inteligência ofensiva nos momentos de superioridade numérica.</div>
+      <div class="vd-text"><strong>Falta de criatividade com superioridade</strong>Contra o Corinthians com 11 contra 10 o tempo todo, o Vasco mal criou. Isso é sinal de que o time ainda depende muito de reação e transição — e pouco de inteligência coletiva quando o espaço é maior.</div>
     </div>
     <div class="vd-item">
       <div class="vd-icon">🟡</div>
-      <div class="vd-text"><strong>Arranque lento no 1º tempo</strong>O time precisa de tempo para engatar. Nos últimos jogos, o adversário marca cedo e o Vasco gasta energia correndo atrás do prejuízo.</div>
+      <div class="vd-text"><strong>Arranque lento no 1º tempo</strong>O time acorda tarde. Nos últimos três jogos da parada, tomou o gol antes de entrar no ritmo. Correr atrás do placar é uma virtude — mas não ter que correr seria muito melhor.</div>
     </div>
   </div>
 </div>
@@ -1023,7 +1088,7 @@
     <div class="section-kicker">Dados coletivos · 18 partidas com registro</div>
     <h2 class="section-title">O Laboratório Ofensivo</h2>
     <p class="section-lead">
-      319 finalizações, 38 grandes chances criadas* em 17 jogos com dado disponível (média de 2,24/jogo), 26,89 xG — e apenas 22 gols. O Vasco produz volume, mas desperdiça. Os números contam uma história de potencial represado.
+      319 finalizações. Trinta e oito grandes chances em 17 jogos. Um xG de 26,89 — o suficiente para ter marcado quase 27 gols. O Vasco criou, chegou, finalizou. E marcou 22. Cinco gols ficaram na gaveta da estatística, nas mãos dos goleiros, nas traves, na pontaria errada de quem estava na hora certa no lugar certo mas não conseguiu empurrar a bola pra rede. Isso é futebol. E isso também é frustração.
     </p>
 
     <!-- KPIs principais -->
@@ -1059,32 +1124,32 @@
 
       <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">17,7 finalizações/jogo</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">Volume alto. A média da Série A gira em torno de 13–14 chutes por jogo — o Vasco está <strong>cerca de 30% acima</strong>. Indica pressão ofensiva real e disposição para atacar, mas o número precisa ser lido junto com a conversão.</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">A média da Série A gira em torno de 13 a 14 chutes por jogo. O Vasco está <strong>30% acima disso</strong>. Esse time vai ao ataque. Vai com frequência, vai com vontade — e às vezes vai de vez demais e deixa o corredor aberto nas costas. Mas vai. E isso tem valor.</p>
       </div>
 
       <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">1,49 xG médio/jogo</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">Mediano-alto para o Brasileirão. Significa que, pelo valor das chances criadas, o Vasco deveria marcar em torno de <strong>1,5 gol por jogo</strong> — ou aproximadamente 27 gols em 18 rodadas. Marcou 22. A diferença de 5 gols é o custo da ineficiência na finalização.</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">Pelo valor das chances criadas, o Vasco deveria ter marcado <strong>cerca de 27 gols</strong> em 18 rodadas. Marcou 22. Cinco gols que existiram na estatística e não entraram na rede. Cinco gols que poderiam ser seis pontos a mais na tabela. É muita coisa.</p>
       </div>
 
       <div style="background:#fff;border-left:3px solid var(--azul-vasco);padding:16px 18px;">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--azul-vasco);text-transform:uppercase;margin-bottom:6px;">2,24 grandes chances/jogo</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">Número expressivo. "Grande chance" é aquela com alta probabilidade de gol — acima de 0,3 xG por finalização. Criar 2,24 por jogo indica que o Vasco chega com qualidade. O problema: <strong>não converte</strong> o que cria.</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">"Grande chance" é aquela que faz o torcedor se levantar do sofá antes do chute. O Vasco cria <strong>mais de duas por jogo</strong> — chega com qualidade, chega perto. O problema não é a chegada. É o que acontece quando a bola para no pé dentro da área.</p>
       </div>
 
       <div style="background:#fff;border-left:3px solid var(--dourado);padding:16px 18px;">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#8a6e1a;text-transform:uppercase;margin-bottom:6px;">52,4% posse média</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">Ligeiramente acima de 50% — o Vasco controla a bola na maioria dos jogos. O dado isolado parece positivo, mas o paradoxo da temporada é que <strong>quando tem mais posse, perde mais</strong>: 8 dos 18 jogos com posse acima de 55% renderam apenas 2 pontos.</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">Controla a bola — mas controlar a bola não controla o resultado. O paradoxo cruel da temporada: <strong>nas 8 partidas com mais de 55% de posse, o Vasco somou apenas 2 pontos.</strong> Contra o Grêmio, com 37% de posse, venceu com conforto. O time é mais perigoso quando corre do que quando caminha.</p>
       </div>
 
       <div style="background:#fff;border-left:3px solid var(--laranja);padding:16px 18px;">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--laranja);text-transform:uppercase;margin-bottom:6px;">81,8% eficiência xG</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">O Vasco converteu 81,8% do que o modelo estatístico esperava que convertesse. <strong>Abaixo de 100% significa subaproveitamento</strong>. Times eficientes ficam acima de 100% — ou seja, superam o xG. O Vasco está 18 pontos abaixo, deixando na mesa quase 5 gols ao longo da temporada.</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">Times eficientes ficam acima de 100% — ou seja, marcam mais do que o modelo esperava. O Vasco ficou em <strong>81,8%</strong>: converteu menos do que deveria. São quase 5 gols deixados pelo caminho. Cinco gols que, em noites como a do Atlético-MG, a torcida sentiu na alma sem nem saber o número.</p>
       </div>
 
       <div style="background:#fff;border-left:3px solid var(--vermelho);padding:16px 18px;">
         <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--vermelho);text-transform:uppercase;margin-bottom:6px;">6,9% conversão de remates</p>
-        <p style="font-size:13px;line-height:1.65;color:#444;">O número mais preocupante do bloco. A média da Série A fica entre <strong>10% e 11%</strong> — o Vasco converte menos de 7 em cada 100 chutes. É o reflexo direto do jogo contra o Atlético-MG (26 chutes, 0 gol), mas o padrão se repete: volume alto, aproveitamento baixo.</p>
+        <p style="font-size:13px;line-height:1.65;color:#444;">O número que mais dói. A média do Brasileirão é de <strong>10 a 11%</strong>. O Vasco converte menos de 7 em cada 100 chutes. O jogo contra o Atlético-MG virou símbolo: 26 finalizações, nenhum gol, Everson eleito melhor da partida com nota 9,1. Mas esse padrão não nasceu naquele dia — ele está aqui há 18 rodadas.</p>
       </div>
 
     </div>
@@ -1121,15 +1186,15 @@
       <div class="chart-box">
         <div class="chart-title" style="color:var(--vermelho)">⚠ O Paradoxo da Posse</div>
         <p style="font-size:14px;line-height:1.75;color:#444;">
-          Em <strong>8 dos 18 jogos</strong> o Vasco teve mais de 55% de posse — e somou apenas <strong>2 pontos</strong> nesses confrontos (2 empates, 6 derrotas). No jogo contra a Chapecoense chegou a <strong>67% de posse e 4,81 xG</strong> com 9 grandes chances… e fez 1 gol.<br><br>
-          Contrapartida: com 37% (Grêmio), 38% (São Paulo) e 41% (Cruzeiro), o time marcou 2, 2 e 3 gols respectivamente. O Vasco é mais letal em transição do que na construção posicional.
+          Mais bola, menos resultado. Em <strong>8 dos 18 jogos</strong> o Vasco teve mais de 55% de posse — e somou apenas <strong>2 pontos</strong> nesses confrontos: 2 empates, 6 derrotas. O pior exemplo foi contra a Chapecoense: <strong>67% de posse, 4,81 xG</strong>, 9 grandes chances criadas. E 1 gol.<br><br>
+          Mas quando jogou no contra-ataque, com menos bola e mais espaço, o Vasco voou. Com 37% de posse contra o Grêmio, venceu. Com 38% contra o São Paulo, virou. O time não é lento — é mal aproveitado quando tem a bola demais no pé.
         </p>
       </div>
       <div class="chart-box">
         <div class="chart-title" style="color:var(--azul-vasco)">✦ A Máquina de Criar — e Desperdiçar</div>
         <p style="font-size:14px;line-height:1.75;color:#444;">
-          Com <strong>17,7 finalizações por jogo</strong>, o Vasco está entre os times mais agressivos do Brasileirão. Mas a conversão de apenas <strong>6,9%</strong> (média nacional gira em torno de 10–11%) revela um problema real de qualidade na finalização.<br><br>
-          O xG acumulado de <strong>26,89</strong> contra apenas <strong>22 gols</strong> marcados (<strong>81,8%</strong> de eficiência) confirma: o Vasco criou oportunidades para marcar mais <strong>4,89 gols</strong> ao longo da temporada — e o jogo contra o Atlético-MG foi o mais gritante: 26 finalizações, 0 gol. Excluindo o jogo atípico da Chapecoense (4,81 xG), a média cai para um realista <strong>1,30 xG por jogo</strong> — mas mesmo assim o Vasco subperformou em vários confrontos. Com um déficit de <strong>−4,89 gols</strong> em relação ao xG, o Vasco desperdiçou oportunidades que poderiam significar 3 a 4 pontos extras — diferença que, combinada com a defesa em colapso, separa o time de uma campanha consistente.
+          <strong>17,7 finalizações por jogo</strong> colocam o Vasco entre os times mais agressivos da Série A. Mas a conversão de apenas <strong>6,9%</strong> — quando a média nacional é de 10 a 11% — revela que atacar muito não é o suficiente quando a bola não entra.<br><br>
+          O xG acumulado de <strong>26,89</strong> contra <strong>22 gols</strong> marcados confirma o diagnóstico: o Vasco criou oportunidades para ter <strong>quase 5 gols a mais</strong>. E o jogo contra o Atlético-MG foi o grito mais alto dessa contradição — 26 chutes, nenhuma vez que a bola cruzou a linha. Um número que vai ficar na memória de quem torce.
         </p>
       </div>
     </div>
